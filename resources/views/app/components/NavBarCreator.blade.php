@@ -9,7 +9,7 @@
             <span>Assinantes</span>
         </div>
     </a>
-    <a href="#" class="photo">
+    <a href="{{ route('newPost') }}" class="photo">
         <i class="iconPhoto fa-solid fa-camera"></i>
     </a>
     <a href="#" class="box">

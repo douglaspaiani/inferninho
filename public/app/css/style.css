@@ -694,3 +694,45 @@ a {
   font-size: 12px;
   margin-bottom: 20px;
 }
+.newPost .description-post {
+  background-color: transparent;
+  width: 100%;
+  min-height: 200px;
+  font-family: var(--font);
+  padding: 10px;
+  color: #ccc;
+  outline: none;
+  border: 0;
+  margin-top: 20px;
+}
+.newPost .buttons {
+  display: flex;
+}
+.newPost .buttons button {
+  background-color: transparent;
+  border: dashed 3px #4c4c4c;
+  width: 100%;
+  color: #4c4c4c;
+  margin: 5px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+.newPost .buttons button i {
+  font-size: 50px;
+  display: block;
+  margin-bottom: 10px;
+}
+.newPost .buttons button span {
+  font-weight: bold;
+}
+.newPost .button {
+  background-color: var(--color-primary);
+  color: #fff;
+  width: 100%;
+  display: block;
+  line-height: 70px;
+  margin-top: 20px;
+  border: 0;
+  font-weight: bold;
+  font-size: 16px;
+}

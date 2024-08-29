@@ -12,6 +12,8 @@ Route::post('/register', [\App\Http\Controllers\RegisterController::class, 'Regi
 Route::middleware('auth')->prefix('app')->group(function () {
     Route::get('/logout', [\App\Http\Controllers\LoginController::class, 'Logout'])->name('logout');
     Route::get('/home', [\App\Http\Controllers\UserController::class, 'HomePage'])->name('home');
+    Route::get('/new-post', [\App\Http\Controllers\PostController::class, 'NewPostPage'])->name('newPost');
+    Route::post('/new-post', [\App\Http\Controllers\PostController::class, 'NewPost'])->name('newPost');
     Route::get('/following', [\App\Http\Controllers\UserController::class, 'FollowingPage'])->name('following');
     Route::get('/credit-cards', [\App\Http\Controllers\UserController::class, 'CreditCardsPage'])->name('credit-cards');
     Route::get('/add-credit-card', [\App\Http\Controllers\UserController::class, 'AddCreditCardPage'])->name('add-credit-card');
