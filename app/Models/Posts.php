@@ -13,6 +13,12 @@ class Posts extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user',
+        'description',
+        'photos'
+    ];
+
     protected $PostRepository;
 
     public function __construct()
@@ -45,11 +51,26 @@ class Posts extends Model
             $data = [
                 'user' => Auth::id(),
                 'description' => $request->get('description') ?? null,
-                'photo' => json_encode($photosArray)
+                'photos' => serialize($photosArray)
             ];
-
-            $this->PostRepository->UploadPhoto($data);
+            if(!$this->PostRepository->UploadPhoto($data)){
+                foreach ($photosArray as $photo) {
+                    $path = public_path('app/uploads/' . $photo);
+                    if (file_exists($path)) {
+                        unlink($path);
+                    }
+                }
+            }
         }
+    }
 
+    public function getPostsHome(){
+        return $this->PostRepository->getPostAndUser();
+    }
+
+    public function like(int $idPost){
+        $post = $this->PostRepository->getById($idPost);
+        $post->increment('likes');
+        return $post->likes;
     }
 }

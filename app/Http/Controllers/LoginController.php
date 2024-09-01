@@ -16,7 +16,7 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('home');
+            return redirect()->intended('app/home');
         }
 
         return redirect('login')->withErrors(['error' => 'Credenciais inválidas, tente novamente.']);

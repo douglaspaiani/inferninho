@@ -1,10 +1,10 @@
-<div class="Post" id={{ $id }}>
+<div class="Post" id="app">
     <div class="UserLine">
         <div class="img">
-            <a href={url}><img src="{{ $photo }}" alt="{{ $name }}"/></a>
+            <a href="#"><img src="{{ $photo }}" alt="{{ $name }}"/></a>
         </div>
         <div class="user">
-            <a href={url}><span>{{ $name }}
+            <a href="#"><span>{{ $name }}
                 @if($verify == 1)
                 <i class="verify fa-solid fa-circle-check"></i>
                 @endif
@@ -22,13 +22,56 @@
         </div>
         <div class="imgPost">
             @if(!empty($image))
-            <span class="image" style="background-image: url('{{ $image }}')"></span>
+                @foreach ($images as $photo)
+                    <span class="image" style="background-image: url('{{ $photo_url }}{{ $photo }}')"></span>
+                @endforeach
             @endif
-            <span class="likePhoto"><i class="fa-solid fa-heart"></i></span>
         </div>
         <div class="infos">
-            <button type="button" onClick={LikePost(id)} data-id={id} class="like button-like"><i class="fa-regular fa-heart"></i> <span>{{ $likes }}</span></button>
-            <A href="#" class="button-like"><i class="fa-solid fa-dollar-sign"></i> <span>Enviar um mimo</span></Link>
+            <post-like :initial-likes="{{ $likes }}" post-id="{{ $id }}"></post-like>
+            <a href="#" class="button-like"><i class="fa-solid fa-dollar-sign"></i> <span>Enviar um mimo</span></a>
         </div>
     </div>
 </div>
+
+<script>
+    const { createApp } = Vue;
+
+createApp({
+    components: {
+        'post-like': {
+            props: ['initialLikes', 'postId'],
+            data() {
+                return {
+                    likes: this.initialLikes,
+                };
+            },
+            methods: {
+                likePost() {
+                    fetch(`/app/posts/${this.postId}/like`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                            'Content-Type': 'application/json',
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        var att = this.likes+1;
+                        $('.like span').text(att);
+                        $('.like').attr('disabled', 'disabled');
+                        $('.like i').removeClass('fa-regular');
+                        $('.like i').addClass('fa-solid');
+                        $('.like').addClass('liked');
+                    });
+                },
+            },
+            template: `
+                    <button type="button" class="like button-like" @click="likePost">
+                        <i class="fa-regular fa-heart"></i> <span>{{ $likes }}</span>
+                    </button>
+            `
+        }
+    }
+}).mount('#app');
+</script>

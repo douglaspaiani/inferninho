@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ProcessPosts;
 use App\Models\Posts;
 use App\Models\User;
 use Exception;
@@ -15,11 +16,10 @@ class PostController extends Controller
     }
 
     public function NewPost(Request $request){
-        $post = new Posts();
 
         try {
-
-            $post->NewPost($request);
+            // add to queue posts
+            ProcessPosts::dispatch($request);
             return redirect()->route('home')->with('success', 'Conteúdo publicado com sucesso!');
 
         } catch (Exception $e){
@@ -27,5 +27,12 @@ class PostController extends Controller
             return redirect()->route('newPost')->withErrors('error', $e->getMessage());
 
         }
+    }
+
+    public function Like(Request $request, int $id)
+    {
+        $post = new Posts();
+        $likes = $post->like($id);
+        return response()->json(['likes' => $likes]);
     }
 }

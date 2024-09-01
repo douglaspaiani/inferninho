@@ -4,5 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Inferninho</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ URL::asset('app/css/style.css') }}">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   </head>

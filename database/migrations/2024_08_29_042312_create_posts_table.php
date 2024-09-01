@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('user');
             $table->string('description')->nullable();
-            $table->json('photo')->nullable();
+            $table->text('photos')->nullable();
             $table->string('video')->nullable();
             $table->integer('likes')->default(0);
             $table->integer('private')->default(0);

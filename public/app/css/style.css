@@ -407,7 +407,7 @@ a {
   align-content: center;
   align-items: center;
 }
-.Post .posting .likePhoto i {
+.Post .liked i {
   color: red;
   font-size: 80px;
   animation: like 1s 1;
@@ -735,4 +735,7 @@ a {
   border: 0;
   font-weight: bold;
   font-size: 16px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
 }

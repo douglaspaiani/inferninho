@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Posts;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -11,7 +12,8 @@ class UserController extends Controller
 {
 
     public function HomePage(){
-        return view('app.home');
+        $posts = new Posts();
+        return view('app.home', ['posts' => $posts->getPostsHome()]);
     }
 
     public function FollowingPage(){
