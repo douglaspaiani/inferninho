@@ -1,5 +1,5 @@
 <div class="NavbarCreator">
-    <a href="#" class="box">
+    <a href="{{ route('profile') }}" class="box">
         <div class="subBox">
             <i class="fa-solid fa-user"></i>
             <span>Meu perfil</span>

@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 
@@ -95,5 +96,34 @@ class User extends Authenticatable
 
         $this->UserRepository->Register($data);
 
+    }
+
+    public function UpdateProfile(Request $request){
+        $user = $request->all();
+
+        // verify exists username
+        if($this->UserRepository->UserExists($user['username']) == true){
+            throw new Exception('Esse nome de usuário já está sendo usado.');
+        }
+
+        $data = [
+            'id' => Auth::id(),
+            'username' => $user['username'],
+            'description' => $user['description']
+        ];
+
+        // verify upload photo
+        $photo = $request->file('photo');
+        if(!empty($photo)){
+            $data['photo'] = $this->UploadPhoto($photo);
+        }
+
+        $this->UserRepository->update($data);
+
+    }
+
+    public function UploadPhoto($photo){
+        $photoName = time().'_'.md5($photo->getClientOriginalName()).'-'.rand(0,99999999).'.jpg';
+        $photo->move(public_path('app/users/profile'), $photoName);
     }
 }

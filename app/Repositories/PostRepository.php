@@ -11,7 +11,7 @@ class PostRepository {
         return Posts::find($id);
     }
 
-    public function UploadPhoto(array $data){
+    public function setPost(array $data){
         return Posts::create($data);
     }
 
@@ -19,6 +19,7 @@ class PostRepository {
         $posts = DB::table('posts')
         ->leftJoin('users', 'posts.user', '=', 'users.id')
         ->select('posts.*', 'users.name', 'users.photo', 'users.username', 'users.verify', 'users.top')
+        ->orderBy('id', 'desc')
         ->get();
 
         return $posts;

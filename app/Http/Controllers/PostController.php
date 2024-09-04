@@ -19,12 +19,13 @@ class PostController extends Controller
 
         try {
             // add to queue posts
-            ProcessPosts::dispatch($request);
-            return redirect()->route('home')->with('success', 'Conteúdo publicado com sucesso!');
+            $post = new Posts();
+            $post->NewPostMedia($request);
+            return redirect()->route('home')->with(['success' => 'Conteúdo publicado com sucesso!']);
 
         } catch (Exception $e){
 
-            return redirect()->route('newPost')->withErrors('error', $e->getMessage());
+            return redirect()->route('newPost')->withErrors(['error' => $e->getMessage()]);
 
         }
     }

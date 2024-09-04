@@ -7,6 +7,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
 
 class UserController extends Controller
 {
@@ -14,6 +15,25 @@ class UserController extends Controller
     public function HomePage(){
         $posts = new Posts();
         return view('app.home', ['posts' => $posts->getPostsHome()]);
+    }
+
+    public function ProfilePage(){
+        $user = new User();
+        $user = $user->getUser();
+        if(empty($user['photo'])){
+            $user['photo'] = URL::asset('app/images/user-default.jpg');
+        }
+        return view('app.profile', ['user' => $user]);
+    }
+
+    public function ProfilePost(Request $request){
+        try {
+            $user = new User();
+            $user->UpdateProfile($request);
+            return redirect()->route('home')->with(['success' => 'Perfil alterado com sucesso!']);
+        } catch (Exception $e){
+            return redirect()->route('profile')->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     public function FollowingPage(){

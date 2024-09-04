@@ -12,6 +12,8 @@ Route::post('/register', [\App\Http\Controllers\RegisterController::class, 'Regi
 Route::middleware('auth')->prefix('app')->group(function () {
     Route::get('/logout', [\App\Http\Controllers\LoginController::class, 'Logout'])->name('logout');
     Route::get('/home', [\App\Http\Controllers\UserController::class, 'HomePage'])->name('home');
+    Route::get('/profile', [\App\Http\Controllers\UserController::class, 'ProfilePage'])->name('profile');
+    Route::post('/profile', [\App\Http\Controllers\UserController::class, 'ProfilePost'])->name('profile');
     Route::post('/posts/{id}/like', [\App\Http\Controllers\PostController::class, 'Like'])->name('like');
     Route::get('/new-post', [\App\Http\Controllers\PostController::class, 'NewPostPage'])->name('newPost');
     Route::post('/new-post', [\App\Http\Controllers\PostController::class, 'NewPost'])->name('newPost');

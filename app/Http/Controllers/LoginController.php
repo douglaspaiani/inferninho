@@ -19,7 +19,7 @@ class LoginController extends Controller
             return redirect()->intended('app/home');
         }
 
-        return redirect('login')->withErrors(['error' => 'Credenciais inválidas, tente novamente.']);
+        return redirect()->route('login')->withErrors(['error' => 'Credenciais inválidas, tente novamente.']);
     }
 
     public function Logout(Request $request)

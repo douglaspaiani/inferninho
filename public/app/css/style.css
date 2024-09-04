@@ -33,6 +33,7 @@ a {
 .page {
   padding-top: 100px !important;
   padding-bottom: 100px !important;
+  position: relative;
 }
 .clicked {
   text-align: center;
@@ -738,4 +739,55 @@ a {
   position: fixed;
   bottom: 0;
   left: 0;
+}
+.input-mock .mock {
+  line-height: 40px;
+  color: #ccc;
+  font-size: 13px;
+}
+.input-mock .mock, .input-mock .input {
+  display: inline-flex !important;
+  width: 50%;
+}
+.input-upload {
+  position: relative;
+}
+.btn-upload {
+  background-color: var(--color-primary);
+  color: #fff;
+  text-transform: uppercase;
+  width: 50px;
+  border: 0;
+  line-height: 50px;
+  border-radius: 100px;
+  text-align: center;
+  position: absolute;
+  bottom: 0px;
+  right: 100px
+}
+.btn-upload i {
+  font-size: 20px;
+}
+.photo-profile {
+  width: 200px;
+  height: 200px;
+  border-radius: 100%;
+  border:solid 3px #fff;
+  margin: auto;
+  display: block;
+  margin-top: 30px;
+  margin-bottom: 50px;
+  background-size: cover;
+  background-position: center center;
+}
+textarea.input {
+  padding-top: 20px;
+  height: 200px !important;
+  outline: none;
+}
+.right {
+  color: #ccc;
+  position: absolute;
+  right: 10px;
+  top: 103px;
 }

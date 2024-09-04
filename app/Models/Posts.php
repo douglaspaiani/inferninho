@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Jobs\ProcessPosts;
 use App\Repositories\PostRepository;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,14 +27,20 @@ class Posts extends Model
         $this->PostRepository = new PostRepository;
     }
 
-    public function NewPost(Request $request){
+    public function NewPostMedia(Request $request): void
+    {
         $photosArray = [];
         $request->validate([
-            'photos' => 'required',
             'photos.*' => 'image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         $photos = $request->file('photos');
+        $video = $request->file('video');
+
+        // verify empty
+        if(empty($photos) && empty($video)){
+            throw new Exception('Você deve escolher uma foto ou vídeo para publicar.');
+        }
 
         // verify qtd photos
         if (count($photos) > 5) {
@@ -50,18 +57,14 @@ class Posts extends Model
 
             $data = [
                 'user' => Auth::id(),
-                'description' => $request->get('description') ?? null,
-                'photos' => serialize($photosArray)
+                'photos' => serialize($photosArray),
+                'description' => $request->get('description') ?? null
             ];
-            if(!$this->PostRepository->UploadPhoto($data)){
-                foreach ($photosArray as $photo) {
-                    $path = public_path('app/uploads/' . $photo);
-                    if (file_exists($path)) {
-                        unlink($path);
-                    }
-                }
-            }
+
         }
+
+        $this->PostRepository->setPost($data);
+
     }
 
     public function getPostsHome(){

@@ -28,50 +28,10 @@
             @endif
         </div>
         <div class="infos">
-            <post-like :initial-likes="{{ $likes }}" post-id="{{ $id }}"></post-like>
+            <button id="like-{{ $id }}" type="button" class="like button-like" onclick="likePost({{ $id }}, {{ $likes }});">
+                <i class="fa-regular fa-heart"></i> <span>{{ $likes }}</span>
+            </button>
             <a href="#" class="button-like"><i class="fa-solid fa-dollar-sign"></i> <span>Enviar um mimo</span></a>
         </div>
     </div>
 </div>
-
-<script>
-    const { createApp } = Vue;
-
-createApp({
-    components: {
-        'post-like': {
-            props: ['initialLikes', 'postId'],
-            data() {
-                return {
-                    likes: this.initialLikes,
-                };
-            },
-            methods: {
-                likePost() {
-                    fetch(`/app/posts/${this.postId}/like`, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                            'Content-Type': 'application/json',
-                        },
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        var att = this.likes+1;
-                        $('.like span').text(att);
-                        $('.like').attr('disabled', 'disabled');
-                        $('.like i').removeClass('fa-regular');
-                        $('.like i').addClass('fa-solid');
-                        $('.like').addClass('liked');
-                    });
-                },
-            },
-            template: `
-                    <button type="button" class="like button-like" @click="likePost">
-                        <i class="fa-regular fa-heart"></i> <span>{{ $likes }}</span>
-                    </button>
-            `
-        }
-    }
-}).mount('#app');
-</script>
