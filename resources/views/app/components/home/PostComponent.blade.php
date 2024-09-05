@@ -1,7 +1,7 @@
 <div class="Post" id="app">
     <div class="UserLine">
         <div class="img">
-            <a href="#"><img src="{{ $photo }}" alt="{{ $name }}"/></a>
+            <a href="#"><span class="img-profile" style="background-image:url('{{ $photo }}" alt="{{ $name }}')"></span></a>
         </div>
         <div class="user">
             <a href="#"><span>{{ $name }}
@@ -14,6 +14,7 @@
             </span></a>
             
             <a href="#"><i>{{ $user }}</i></a>
+            <p class="date-posting">Postado {{ $date }}</p>
         </div>
     </div>
     <div class="posting">

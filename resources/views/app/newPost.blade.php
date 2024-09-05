@@ -14,7 +14,7 @@
 
     <div class="UserLine">
         <div class="img">
-            <a href="#"><img src="{{ $user->photo ?? URL::asset('app/images/user-default.jpg') }}" alt="{{ $user->name }}"/></a>
+            <a href="#"><span class="img-profile" style="background-image:url('{{ $user->photo }}')"></span></a>
         </div>
         <div class="user">
             <a href="#"><span>{{ $user->name }}

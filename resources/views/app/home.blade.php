@@ -13,6 +13,7 @@
         id="{{ $post->id }}"
         top="{{ $post->top }}"
         verify="{{ $post->verify }}"
+        date="{{ $post->created_at }}"
     />
 @endforeach
 </div>

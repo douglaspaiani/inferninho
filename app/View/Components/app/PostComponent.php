@@ -2,6 +2,7 @@
  
 namespace App\View\Components\app;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\URL;
 use Illuminate\View\Component;
 use Illuminate\View\View;
@@ -17,7 +18,8 @@ class PostComponent extends Component
         public int $likes,
         public int $id,
         public int $top,
-        public int $verify
+        public int $verify,
+        public string $date
     ) {}
  
     public function render(): View
@@ -38,6 +40,10 @@ class PostComponent extends Component
         }
 
         $photoUrl = env('PHOTO_URL');
+
+        // date posting
+        $date = Carbon::parse($this->date);
+        $this->date = $date->diffForHumans();
 
         return view('app.components.home.PostComponent', ['images' => $images, 'photo_url' => $photoUrl]);
     }

@@ -22,6 +22,8 @@ class UserController extends Controller
         $user = $user->getUser();
         if(empty($user['photo'])){
             $user['photo'] = URL::asset('app/images/user-default.jpg');
+        } else {
+            $user['photo'] = env('PROFILE_IMG').$user['photo'];
         }
         return view('app.profile', ['user' => $user]);
     }

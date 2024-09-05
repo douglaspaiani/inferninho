@@ -30,6 +30,9 @@ a {
   text-decoration: none;
   outline: none;
 }
+a:hover, button:hover {
+  -webkit-tap-highlight-color: transparent;
+}
 .page {
   padding-top: 100px !important;
   padding-bottom: 100px !important;
@@ -335,15 +338,21 @@ a {
   position: relative;
   background-size: cover;
   background-position: center center;
+  border-radius: 7px;
 }
-.Post .UserLine .img img {
+.Post .UserLine .img .img-profile {
   width: 60px;
+  height: 60px;
+  display: inline-block;
   border-radius: 100px;
   border:solid 4px #575757;
+  background-position: center;
+  background-size: cover;
 }
 .Post .UserLine .user {
   width: 70%;
   display: inline-block;
+  padding-top: 8px;
 }
 .Post .UserLine .user .verify {
   display: inline-block;
@@ -372,6 +381,12 @@ a {
   font-size: 13px;
   padding-top: 10px;
   padding-bottom: 30px;
+}
+.Post .user .date-posting { 
+  color:#aaaaaa;
+  font-size: 12px;
+  padding-top: 0;
+  margin-top: 7px;
 }
 .Post .posting .infos {
   padding-top: 20px;
@@ -790,4 +805,46 @@ textarea.input {
   position: absolute;
   right: 10px;
   top: 103px;
+}
+.loading-gif {
+  max-width: 200px;
+  display: block;
+}
+
+.pre-loader {
+  position: fixed;
+  z-index: 999999;
+  top: 0;
+  left: 0;
+  background: #262626;
+  display: inline-grid;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.pre-loader.hidden {
+  animation: fadeOut 1s; 
+  animation-fill-mode: forwards;
+}
+.pre-loader i {
+  color: #aaaaaa;
+  display: block;
+  margin-top: 30px;
+  width: 100%;
+  text-align: center;
+  font-size: 50px;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes fadeOut {
+  100% {
+      opacity: 0;
+      visibility: hidden;
+  }
 }

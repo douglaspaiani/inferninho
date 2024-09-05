@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Jobs\ProcessPosts;
 use App\Repositories\PostRepository;
+use App\Services\UploadService;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -21,10 +22,12 @@ class Posts extends Model
     ];
 
     protected $PostRepository;
+    protected $UploadService;
 
     public function __construct()
     {
         $this->PostRepository = new PostRepository;
+        $this->UploadService = new UploadService;
     }
 
     public function NewPostMedia(Request $request): void
@@ -50,9 +53,8 @@ class Posts extends Model
         if(count($photos) > 0){
             // upload photos
             foreach ($photos as $photo) {
-                $photoName = time().'_'.md5($photo->getClientOriginalName()).'-'.rand(0,99999999).'.jpg';
-                $photo->move(public_path('app/uploads'), $photoName);
-                array_push($photosArray, $photoName);
+                $upload = $this->UploadService->UploadPost($photo);
+                array_push($photosArray, $upload);
             }
 
             $data = [

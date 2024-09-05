@@ -17,11 +17,11 @@
                         </div>
                         <div class="input-form input-mock">
                             <label class="label" htmlFor="username">Nome de usuário</label>
-                            <span class="mock">{{ env('APP_URL') }}/</span><input type="text" class="input" name="username" placeholder="/seu-usuario" value="{{ $user['username'] }}" required></input>
+                            <span class="mock">{{ env('USER_URL') }}/</span><input type="text" oninput="transformUsername()" class="input" id="username" name="username" placeholder="/seu-usuario" value="{{ $user['username'] }}" required></input>
                         </div>
                         <div class="input-form">
                             <label class="label" htmlFor="description">Descrição do perfil</label>
-                            <textarea class="input" name="description" placeholder="Escreva uma descrição para o seu perfil...">{{ $user['description'] }}</textarea>
+                            <textarea class="input" id="description" name="description" placeholder="Escreva uma descrição para o seu perfil...">{{ $user['description'] }}</textarea>
                         </div>
                         <div class="input-form">
                             <div class="button btn-loading">

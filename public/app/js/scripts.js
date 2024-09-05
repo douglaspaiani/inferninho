@@ -1,3 +1,6 @@
+window.addEventListener('load', function () {
+    document.querySelector('.pre-loader').className += ' hidden';
+});
 function openMenu(){
     // Open menu
         $(".overlay").fadeIn().show();
@@ -7,11 +10,19 @@ function openMenu(){
 }
 function closeMenu(){
     // Close menu
-    $(".overlay").click(function(){
-        $(".Header .Menu").fadeOut(300).hide(300);
-        $(this).fadeOut(300).hide(300);
-        $(".Header .mainMenu").css('z-index', 0);
-    });
+    $(".Header .Menu").fadeOut(300).hide(300);
+    $(this).fadeOut(300).hide(300);
+    $(".Header .mainMenu").css('z-index', 0);
+    $(".overlay").fadeOut().hide(300);
+}
+
+function transformUsername() {
+    let input = document.getElementById('username');
+    let value = input.value;
+    value = value.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    value = value.replace(/[\s.,]+/g, '-').toLowerCase();
+    value = value.replace(/[^a-z0-9\-]/g, '');
+    input.value = value;
 }
 
 function likePost(id, likes) {
