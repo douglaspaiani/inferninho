@@ -22,3 +22,6 @@ Route::middleware('auth')->prefix('app')->group(function () {
     Route::get('/add-credit-card', [\App\Http\Controllers\UserController::class, 'AddCreditCardPage'])->name('add-credit-card');
 });
 
+// User Profile
+Route::get('/{username}', [\App\Http\Controllers\UserController::class, 'UserProfilePage'])->middleware('auth')->name('username');
+

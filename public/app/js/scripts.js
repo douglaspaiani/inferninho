@@ -57,6 +57,16 @@ $(document).ready(function(){
     $('#btn-upload-profile').click(function(){
         $('#upload-photo').click();
     });
+    $('.pageLogin .btn-loading').click(function(){
+        $('.btn-loading button span').text('Entrando...');
+    });
+    $('.pageRegister .btn-loading').click(function(){
+        $('.btn-loading button span').text('Regitrando...');
+    });
+
+    $('.imgPost .image').on('dblclick', function() {
+        alert('Você clicou duas vezes na imagem!');
+    });
 
     $('#upload-photo').change(function(event){
         const file = event.target.files[0]; 

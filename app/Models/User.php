@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
 
 class User extends Authenticatable
@@ -78,7 +79,28 @@ class User extends Authenticatable
     }
 
     public function getUser(){
-        return $this->UserRepository->find(Auth::id());
+        $user = $this->UserRepository->find(Auth::id());
+        $user['link'] = env('APP_URL').'/'.$user['username'];
+        if(empty($user['photo'])){
+            $user['photo'] = URL::asset('app/images/user-default.jpg');
+        } else {
+            $user['photo'] = env('PROFILE_IMG').$user['photo'];
+        }
+        $user['user'] = $user['username'];
+        $user['username'] = '@'.$user['username'];
+        return $user;
+    }
+
+    public function getUserByUsername(string $username){
+        $user = $this->UserRepository->getUserByUsername($username);
+        if(empty($user['photo'])){
+            $user['photo'] = URL::asset('app/images/user-default.jpg');
+        } else {
+            $user['photo'] = env('PROFILE_IMG').$user['photo'];
+        }
+        $user['username'] = '@'.$user['username'];
+
+        return $user;
     }
 
     public function RegisterNewUser(array $data){

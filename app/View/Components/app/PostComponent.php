@@ -9,6 +9,8 @@ use Illuminate\View\View;
  
 class PostComponent extends Component
 {
+    public $link;
+
     public function __construct(
         public string $name,
         public string $photo,
@@ -19,17 +21,22 @@ class PostComponent extends Component
         public int $id,
         public int $top,
         public int $verify,
-        public string $date
+        public string $date,
     ) {}
  
     public function render(): View
     {
+        $this->user = str_replace('@', '', $this->user);
+        $this->link = env('APP_URL').'/'.$this->user;
+        
         // add @ to username
         $this->user = "@".$this->user;
 
         // verify photo exists
         if(!empty($this->photo)){
-            $this->photo = env('PROFILE_IMG').$this->photo;
+            if(!filter_var($this->photo, FILTER_VALIDATE_URL)){
+                $this->photo = env('PROFILE_IMG').$this->photo;
+            }
         } else {
             $this->photo = URL::asset('app/images/user-default.jpg');
         }

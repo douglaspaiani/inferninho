@@ -3,7 +3,7 @@
     <span class="backgroundLogin">
         <p>Monetize sua liberdade,<br/>seja dono do seu inferninho!</p>
     </span>
-    <div class="boxLogin">
+    <div class="boxLogin pageLogin">
         <form method="POST" action="{{ route('login') }}">
             @csrf
             <h1>Acesse sua conta</h1>

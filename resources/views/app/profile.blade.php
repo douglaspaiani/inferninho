@@ -4,7 +4,7 @@
 
 <div class="container page">
 <a href="{{ route('home') }}" class="Back"><i class="fa-solid fa-chevron-left"></i> Voltar</a>
-<a href="{{ route('home') }}" class="right"><i class="fa-solid fa-user" style="margin-right:8px"></i> Ver meu perfil</a>
+<a href="{{ $user['link'] }}" class="right"><i class="fa-solid fa-user" style="margin-right:8px"></i> Ver meu perfil</a>
                 <h2 class="title" style="margin-top: 50px">Editar perfil</h2>
                 <div class="AddCard">
                     <form method="POST" action="{{ route('profile') }}" enctype="multipart/form-data">
@@ -17,7 +17,7 @@
                         </div>
                         <div class="input-form input-mock">
                             <label class="label" htmlFor="username">Nome de usuário</label>
-                            <span class="mock">{{ env('USER_URL') }}/</span><input type="text" oninput="transformUsername()" class="input" id="username" name="username" placeholder="/seu-usuario" value="{{ $user['username'] }}" required></input>
+                            <span class="mock">{{ env('USER_URL') }}/</span><input type="text" oninput="transformUsername()" class="input" id="username" name="username" placeholder="/seu-usuario" value="{{ $user['user'] }}" required></input>
                         </div>
                         <div class="input-form">
                             <label class="label" htmlFor="description">Descrição do perfil</label>

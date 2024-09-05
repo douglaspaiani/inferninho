@@ -1,10 +1,10 @@
 <div class="Post" id="app">
     <div class="UserLine">
         <div class="img">
-            <a href="#"><span class="img-profile" style="background-image:url('{{ $photo }}" alt="{{ $name }}')"></span></a>
+            <a href="{{ $link }}"><span class="img-profile" style="background-image:url('{{ $photo }}" alt="{{ $name }}')"></span></a>
         </div>
         <div class="user">
-            <a href="#"><span>{{ $name }}
+            <a href="{{ $link }}"><span>{{ $name }}
                 @if($verify == 1)
                 <i class="verify fa-solid fa-circle-check"></i>
                 @endif
@@ -13,7 +13,7 @@
                 @endif
             </span></a>
             
-            <a href="#"><i>{{ $user }}</i></a>
+            <a href="{{ $link }}"><i>{{ $user }}</i></a>
             <p class="date-posting">Postado {{ $date }}</p>
         </div>
     </div>

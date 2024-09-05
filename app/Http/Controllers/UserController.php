@@ -17,14 +17,18 @@ class UserController extends Controller
         return view('app.home', ['posts' => $posts->getPostsHome()]);
     }
 
+    public function UserProfilePage(string $username){
+        $user = new User();
+        $post = new Posts();
+        $user = $user->getUserByUsername($username);
+        $posts = $post->getPostsByUsername($username);
+        $counts = $post->getCounts($username);
+        return view('app.userProfile', ['user' => $user, 'posts' => $posts, 'counts' => $counts]);
+    }
+
     public function ProfilePage(){
         $user = new User();
         $user = $user->getUser();
-        if(empty($user['photo'])){
-            $user['photo'] = URL::asset('app/images/user-default.jpg');
-        } else {
-            $user['photo'] = env('PROFILE_IMG').$user['photo'];
-        }
         return view('app.profile', ['user' => $user]);
     }
 

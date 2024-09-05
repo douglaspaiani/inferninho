@@ -1,25 +1,25 @@
 <div class="NavbarCreator">
-    <a href="{{ route('profile') }}" class="box">
-        <div class="subBox">
+    <div class="box">
+        <a href="{{ route('profile') }}" class="subBox">
             <i class="fa-solid fa-user"></i>
-            <span>Meu perfil</span>
-        </div>
-        <div class="subBox">
+            <span>Editar perfil</span>
+        </a>
+        <a href="#" class="subBox">
             <i class="fa-solid fa-users"></i>
             <span>Assinantes</span>
-        </div>
-    </a>
+        </a>
+    </div>
     <a href="{{ route('newPost') }}" class="photo">
         <i class="iconPhoto fa-solid fa-camera"></i>
     </a>
-    <a href="#" class="box">
-        <div class="subBox">
+    <div class="box">
+        <a href="#" class="subBox">
             <i class="fa-solid fa-circle-dollar-to-slot"></i>
             <span>Receita</span>
-        </div>
-        <div class="subBox">
+        </a>
+        <a href="#" class="subBox">
             <i class="fa-solid fa-hand-holding-dollar"></i>
             <span>Saque</span>
-        </div>
-    </a>
+        </a>
+    </div>
 </div>

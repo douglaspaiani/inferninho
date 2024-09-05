@@ -26,7 +26,7 @@
                 @endif
             </span></a>
             
-            <a href="#"><i>{{ $user->user }}</i></a>
+            <a href="#"><i>{{ $user->username }}</i></a>
         </div>
     </div>
     <form class="newPost" method="POST" action="{{ route('newPost') }}" enctype="multipart/form-data">

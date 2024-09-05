@@ -18,6 +18,10 @@ class UserRepository {
         return User::find($data['id'])->update($data);
     }
 
+    public function getUserByUsername(string $username){
+        return User::where('username', $username)->first();
+    }
+
     public function UserExists(string $username): bool
     {
         if (User::where('username', $username)->count() > 1){
