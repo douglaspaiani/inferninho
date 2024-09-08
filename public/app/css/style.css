@@ -1,6 +1,3 @@
-:root {
-    --color-primary:#
-}
 /* FONTS */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
@@ -8,6 +5,7 @@
 :root {
   --color-primary:#CE5656;
   --color-primary-hover:#9e4040;
+  --block-background: #313131;
   --font: "Inter", sans-serif;
 }
 
@@ -305,6 +303,21 @@ a:hover, button:hover {
 .Post {
   width: 100%;
   padding-bottom: 20px;
+  background-color: var(--block-background);
+  border-radius: 7px;
+  padding: 10px;
+  margin-bottom: 15px;
+  padding-top: 20px;
+  box-sizing: border-box;
+}
+.Post::after{
+  content: "";
+  display: block;
+  width: 60%;
+  height: 9px;
+  background-color: #484848;
+  border-radius: 50px;
+  margin:auto;
 }
 .Post .UserLine {
   width: 100%;
@@ -367,7 +380,6 @@ a:hover, button:hover {
   width: 100%;
   padding-top: 10px;
   padding-bottom: 20px;
-  border-bottom: solid 1px #3a3a3a;
 }
 .Post .posting img {
   width: 100%;
@@ -847,6 +859,15 @@ textarea.input {
   }
 }
 
+.userPanel {
+  background-color: var(--block-background);
+  border-radius:7px;
+  margin-top: 90px;
+  padding-top: 80px;
+  padding-bottom: 40px;
+  position:relative;
+}
+
 .userPanel .photo {
   width: 150px;
   height: 150px;
@@ -857,6 +878,9 @@ textarea.input {
   border-radius: 200px;
   border: solid 4px #575757;
   margin-top: 20px;
+  position: absolute;
+  left: 28%;
+  top: -100px;
 }
 .userPanel .name {
   color: #fff;
@@ -882,29 +906,68 @@ textarea.input {
 .userPanel .social a {
   background-color: var(--color-primary-hover);
   color: #fff;
-  font-size: 20px;
-  width: 50px;
-  line-height: 50px;
+  font-size: 15px;
+  width: 35px;
+  line-height: 35px;
   display: inline-block;
   text-align: center;
   border-radius: 5px;
-  margin-right:10px;
-  margin-left:10px;
+  margin-right:5px;
+  margin-left:5px;
 }
-.userPanel .stats {
+.stats {
   display: flex;
-  border-bottom: solid 3px var(--color-primary-hover);
   margin-top: 40px;
 }
-.userPanel .stats .box {
+.stats .box p {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.stats .box {
   width: 100%;
   text-align: center;
   color: #aaaaaa;
+  background-color: var(--block-background);
+  margin-left: 10px;
+  margin-right: 10px;
+  padding:20px;
+  border-radius: 7px;
 }
-.userPanel .stats .box span {
+.stats .box span {
   font-weight: bold;
   font-size: 20px;
 }
 .UserPosts {
-  margin-top: 60px;
+  margin-top: 30px;
+}
+.pageProfile .buttons a {
+  background-color: var(--block-background);
+  color: #aaaaaa;
+  text-transform: uppercase;
+  width:100%;
+  line-height: 45px;
+  display: block;
+  font-size: 12px;
+  text-align:center;
+  border-radius: 7px;
+  margin-bottom: 30px;
+}
+.pageProfile .buttons a i {
+  margin-right: 10px;
+}
+#options {
+  position: absolute;
+  top:20px;
+  right: 20px;
+  background-color: transparent;
+  color: #aaaaaa;
+  border: 0;
+  font-size: 22px;
+}
+.boxContent {
+  background-color: var(--block-background);
+  border-radius: 7px;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
 }

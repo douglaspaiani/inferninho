@@ -48,6 +48,12 @@ class User extends Authenticatable
         'top',
         'verify',
         'likes',
+        'tiktok',
+        'instagram',
+        'facebook',
+        'twitter',
+        'site',
+        'telegram',
         'description',
         'cpf',
         'pix',
@@ -140,7 +146,13 @@ class User extends Authenticatable
         $data = [
             'id' => Auth::id(),
             'username' => $user['username'],
-            'description' => $user['description']
+            'description' => $user['description'],
+            'tiktok' => $user['tiktok'] ?? null,
+            'instagram' => $user['instagram'] ?? null,
+            'facebook' => $user['facebook'] ?? null,
+            'twitter' => $user['twitter'] ?? null,
+            'telegram' => $user['telegram'] ?? null,
+            'site' => $user['site'] ?? null
         ];
 
         // verify and upload photo

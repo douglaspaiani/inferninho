@@ -28,6 +28,12 @@ return new class extends Migration
             $table->string('pix')->nullable();
             $table->integer('creator')->default(0);
             $table->string('token')->nullable();
+            $table->string('tiktok')->nullable();
+            $table->string('instagram')->nullable();
+            $table->string('facebook')->nullable();
+            $table->string('telegram')->nullable();
+            $table->string('twitter')->nullable();
+            $table->string('site')->nullable();
             $table->json('cards')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

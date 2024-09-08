@@ -18,9 +18,11 @@
         </div>
     </div>
     <div class="posting">
+        @if(!empty($description))
         <div class="description">
             {{ $description }}
         </div>
+        @endif
         <div class="imgPost">
             @if(!empty($image))
                 @foreach ($images as $photo)

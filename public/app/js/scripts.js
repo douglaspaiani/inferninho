@@ -3,14 +3,15 @@ window.addEventListener('load', function () {
 });
 function openMenu(){
     // Open menu
-        $(".overlay").fadeIn().show();
-        $(".Header .Menu").fadeIn(300).show();
-        $(this).css('z-index', 9999);
+    $(".overlay").fadeIn().show();
+    $(".Header .Menu").fadeIn(300).show();
+    $(this).css('z-index', 9999);
 
 }
 function closeMenu(){
     // Close menu
     $(".Header .Menu").fadeOut(300).hide(300);
+    $("#options-menu").fadeOut(300).hide(300);
     $(this).fadeOut(300).hide(300);
     $(".Header .mainMenu").css('z-index', 0);
     $(".overlay").fadeOut().hide(300);
@@ -67,6 +68,12 @@ $(document).ready(function(){
     $('.imgPost .image').on('dblclick', function() {
         alert('Você clicou duas vezes na imagem!');
     });
+
+    $('#options').click(function(){
+        $(".overlay").fadeIn().show();
+        $("#options-menu").fadeIn(300).show();
+        $('#options-menu').css('z-index', 99999);
+    })
 
     $('#upload-photo').change(function(event){
         const file = event.target.files[0]; 
