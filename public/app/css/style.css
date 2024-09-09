@@ -971,3 +971,24 @@ textarea.input {
   padding: 10px;
   box-sizing: border-box;
 }
+.sign {
+  display: block;
+  text-align: center;
+  color:#aaa;
+  padding-top:30px;
+  padding-bottom:30px;
+}
+.sign span {
+  font-size: 40px;
+  font-weight: bold;
+  color:#fff;
+}
+.sign sup {
+  font-size: 20px;
+  color: #fff;
+}
+.sign sub {
+  color: #aaa;
+  font-size: 15px;
+  font-weight: initial;
+}

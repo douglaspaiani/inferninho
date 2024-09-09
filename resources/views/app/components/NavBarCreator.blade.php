@@ -5,8 +5,8 @@
             <span>Editar perfil</span>
         </a>
         <a href="#" class="subBox">
-            <i class="fa-solid fa-users"></i>
-            <span>Assinantes</span>
+            <i class="fa-solid fa-gear"></i>
+            <span>Assinatura</span>
         </a>
     </div>
     <a href="{{ route('newPost') }}" class="photo">
@@ -14,12 +14,12 @@
     </a>
     <div class="box">
         <a href="#" class="subBox">
-            <i class="fa-solid fa-circle-dollar-to-slot"></i>
-            <span>Receita</span>
+            <i class="fa-solid fa-chart-simple"></i>
+            <span>Relatório</span>
         </a>
         <a href="#" class="subBox">
-            <i class="fa-solid fa-hand-holding-dollar"></i>
-            <span>Saque</span>
+            <i class="fa-solid fa-circle-dollar-to-slot"></i>
+            <span>Receita</span>
         </a>
     </div>
 </div>

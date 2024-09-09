@@ -40,6 +40,11 @@
         <div class="box"><span>{{ $counts['likes'] }}</span><p>Likes</p></div>
     </div>
     <div class="UserPosts">
+        <div class="sign boxContent">
+            <h2>Assine o conteúdo completo de {{ $user->name }}</h2>
+            <p>por apenas</p>
+            <span><sup>R$</sup> 49,90 <sub>/mensal</sub></span>
+        </div>
         <div class="buttons">
             <a href="#"><i class="fa-solid fa-grip"></i> Visualizar em grade</a>
         </div>
