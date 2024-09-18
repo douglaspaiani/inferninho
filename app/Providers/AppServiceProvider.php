@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\View\Components\app\ErrorsComponent;
 use App\View\Components\app\ItemListProfileComponent;
 use App\View\Components\app\NavBarComponent;
 use App\View\Components\app\NavBarCreatorComponent;
@@ -28,5 +29,6 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('navbar-component', NavBarComponent::class);
         Blade::component('navbar-creator-component', NavBarCreatorComponent::class);
         Blade::component('item-list-profile-component', ItemListProfileComponent::class);
+        Blade::component('errors-component', ErrorsComponent::class);
     }
 }

@@ -23,7 +23,8 @@ class UserController extends Controller
         $user = $user->getUserByUsername($username);
         $posts = $post->getPostsByUsername($username);
         $counts = $post->getCounts($username);
-        return view('app.userProfile', ['user' => $user, 'posts' => $posts, 'counts' => $counts]);
+        $price = number_format($user['price_1'], 2, ',', '.');
+        return view('app.userProfile', ['user' => $user, 'posts' => $posts, 'counts' => $counts, 'price' => $price]);
     }
 
     public function ProfilePage(){
@@ -40,6 +41,28 @@ class UserController extends Controller
         } catch (Exception $e){
             return redirect()->route('profile')->withErrors(['error' => $e->getMessage()]);
         }
+    }
+
+    public function SignaturePage(){
+        $user = new User();
+        $user = $user->getUser();
+        return view('app.signature', ['user' => $user]);
+    }
+
+    public function SignaturePost(Request $request){
+        try {
+            $user = new User();
+            $user->UpdateSignature($request);
+            return redirect()->route('home')->with(['success' => 'Assinatura alterada com sucesso!']);
+        } catch (Exception $e){
+            return redirect()->route('signature')->withErrors(['error' => $e->getMessage()]);
+        }
+    }
+
+    public function SubscribePage(string $username){
+        $user = new User();
+        $user = $user->getUserByUsername($username);
+        return view('app.subscribe', ['user' => $user]);
     }
 
     public function FollowingPage(){

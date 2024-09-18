@@ -51,6 +51,7 @@ $(document).ready(function(){
     $('.card').mask('0000 0000 0000 0000');
     $('.valid').mask('00/00');
     $('.code').mask('000');
+    $('.money').mask('000.000.000.000.000,00', {reverse: true});
 
     $('#btn-add-photo').click(function(){
         $('#photos').click();

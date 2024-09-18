@@ -58,6 +58,9 @@ class User extends Authenticatable
         'cpf',
         'pix',
         'creator',
+        'price_1',
+        'price_3',
+        'price_6',
         'email_verified_at'
     ];
 
@@ -159,6 +162,21 @@ class User extends Authenticatable
         if($request->hasFile('photo')){
             $data['photo'] = $this->UploadService->UploadPhotoProfile(Auth::id(), $request->file('photo'));
         }
+
+        $this->UserRepository->update($data);
+
+    }
+
+    public function UpdateSignature(Request $request){
+        $user = $request->all();
+
+        // mount data
+        $data = [
+            'id' => Auth::id(),
+            'price_1' => ConvertRealToFloat($user['price_1']) ?? null,
+            'price_3' => ConvertRealToFloat($user['price_3']) ?? null,
+            'price_6' => ConvertRealToFloat($user['price_6']) ?? null
+        ];
 
         $this->UserRepository->update($data);
 

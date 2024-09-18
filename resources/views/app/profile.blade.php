@@ -3,10 +3,15 @@
 <x-navbar-component/>
 
 <div class="container page">
+<x-errors-component/>
 <a href="{{ route('home') }}" class="Back"><i class="fa-solid fa-chevron-left"></i> Voltar</a>
 <a href="{{ $user['link'] }}" class="right"><i class="fa-solid fa-user" style="margin-right:8px"></i> Ver meu perfil</a>
                 <h2 class="title" style="margin-top: 50px">Editar perfil</h2>
-                <div class="AddCard boxContent">
+                <div class="tabs">
+                    <a href="#" class="active">Editar perfil</a>
+                    <a href="{{ route('signature') }}">Planos de assinatura</a>
+                </div>
+                <div class="AddCard boxContent forTabs">
                     <form method="POST" action="{{ route('profile') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="input-form input-upload">
@@ -15,9 +20,11 @@
                             <input type="file" id="upload-photo" name="photo" style="display: none">
                             <button type="button" id="btn-upload-profile" class="btn-upload"><i class="fa-solid fa-camera"></i></button>
                         </div>
-                        <div class="input-form input-mock">
+                        <div class="input-form">
                             <label class="label" for="username">Nome de usuário</label>
-                            <span class="mock">{{ env('USER_URL') }}/</span><input type="text" oninput="transformUsername()" class="input" id="username" name="username" placeholder="/seu-usuario" value="{{ $user['user'] }}" required></input>
+                            <div class="input-mock">
+                                <span class="mock">{{ env('USER_URL') }}/</span><input type="text" oninput="transformUsername()" class="input" id="username" name="username" placeholder="/seu-usuario" value="{{ $user['user'] }}" required></input>
+                            </div>
                         </div>
                         <div class="input-form">
                             <label class="label" for="description">Descrição do perfil</label>

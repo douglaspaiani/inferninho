@@ -34,6 +34,9 @@ return new class extends Migration
             $table->string('telegram')->nullable();
             $table->string('twitter')->nullable();
             $table->string('site')->nullable();
+            $table->float('price_1')->nullable();
+            $table->float('price_3')->nullable();
+            $table->float('price_6')->nullable();
             $table->json('cards')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

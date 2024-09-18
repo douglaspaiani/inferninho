@@ -3,14 +3,9 @@
 <x-navbar-component/>
 
 <div class="container page">
-    <div class="Post">
-    @if ($errors->any())
-                @foreach ($errors->all() as $error)
-                <div class="error">
-                    {{ $error }}
-                </div>
-                @endforeach
-    @endif
+    <div class="Post noAfter">
+
+    <x-errors-component/>
 
     <div class="UserLine">
         <div class="img">

@@ -1,7 +1,7 @@
 @include('app.inc.header')
 <x-navbar-component/>
 <div class="container page">
-
+<x-errors-component/>
 @foreach ($posts as $post)
     <x-post-component
         name="{{ $post->name }}"
