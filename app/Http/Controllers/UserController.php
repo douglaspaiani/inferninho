@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Posts;
+use App\Models\Subscriptions;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -20,11 +21,12 @@ class UserController extends Controller
     public function UserProfilePage(string $username){
         $user = new User();
         $post = new Posts();
+        $subs = new Subscriptions();
         $user = $user->getUserByUsername($username);
         $posts = $post->getPostsByUsername($username);
         $counts = $post->getCounts($username);
         $price = number_format($user['price_1'], 2, ',', '.');
-        return view('app.userProfile', ['user' => $user, 'posts' => $posts, 'counts' => $counts, 'price' => $price]);
+        return view('app.userProfile', ['user' => $user, 'posts' => $posts, 'counts' => $counts, 'price' => $price, 'subscriber' => $subs->validSubscription($user['id'])]);
     }
 
     public function ProfilePage(){
@@ -57,16 +59,6 @@ class UserController extends Controller
         } catch (Exception $e){
             return redirect()->route('signature')->withErrors(['error' => $e->getMessage()]);
         }
-    }
-
-    public function SubscribePage(string $username){
-        $user = new User();
-        $user = $user->getUserByUsername($username);
-        return view('app.subscribe', ['user' => $user]);
-    }
-
-    public function FollowingPage(){
-        return view('app.following');
     }
 
     public function CreditCardsPage(){

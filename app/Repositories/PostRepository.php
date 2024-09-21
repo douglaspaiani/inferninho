@@ -3,7 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\Posts;
+use App\Models\Subscriptions;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PostRepository {
@@ -46,13 +48,20 @@ class PostRepository {
         ->sum('posts.likes');
     }
 
-    public function getPostAndUser(){
-        $posts = DB::table('posts')
-        ->leftJoin('users', 'posts.user', '=', 'users.id')
-        ->select('posts.*', 'users.name', 'users.photo', 'users.username', 'users.verify', 'users.top')
-        ->orderBy('id', 'desc')
-        ->get();
+    public function getPostsHome(){
+        $subs = new Subscriptions();
 
+        $users = $subs->getSubscriptions();
+
+        array_push($users, [0=>Auth::id()]);
+
+        $posts = DB::table('posts')
+        ->join('users', 'posts.user', '=', 'users.id')
+        ->whereIn('posts.user', $users)
+        ->select('posts.*', 'users.name', 'users.photo', 'users.username', 'users.verify', 'users.top')
+        ->orderBy('posts.id', 'desc')
+        ->get();
+        
         return $posts;
     }
 }

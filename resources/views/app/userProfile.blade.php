@@ -10,8 +10,10 @@
         <button type="button" id="options"><i class="fa-solid fa-ellipsis-vertical"></i></button>
         <div id="options-menu" class="Menu">
             <a href="#"><i class="fa-solid fa-share"></i> Compartilhar</a>
+            @if($subscriber == true)
             <a href="#"><i class="fa-solid fa-ban"></i> Cancelar assinatura</a>
             <a href="#"><i class="fa-solid fa-triangle-exclamation"></i> Denunciar perfil</a>
+            @endif
         </div>
         <div class="social">
             @if(!empty($user->tiktok))
@@ -40,14 +42,20 @@
         <div class="box"><span>{{ $counts['likes'] }}</span><p>Likes</p></div>
     </div>
     <div class="UserPosts">
+
+        @if($subscriber == false)
+
         <div class="sign">
             <div class="boxSign boxContent">
                 <h2>Assine o conteúdo completo de {{ $user->name }}</h2>
                 <p>por apenas</p>
                 <span><sup>R$</sup> {{ $price }} <sub>/mensal</sub></span>
-                <a href="{{ route('subscribe', ['username' => str_replace('@', '', $user->username)]) }}" class="tosign"><i class="fa-solid fa-play"></i> Assinar agora</a>
+                <a href="{{ route('checkout', ['username' => str_replace('@', '', $user->username)]) }}" class="tosign"><i class="fa-solid fa-play"></i> Assinar agora</a>
             </div>
         </div>
+
+        @else
+
         <div class="buttons">
             <a href="#"><i class="fa-solid fa-grip"></i> Visualizar em grade</a>
         </div>
@@ -65,6 +73,8 @@
                 date="{{ $post->created_at }}"
             />
         @endforeach
+
+        @endif
     </div>
 </div>
 

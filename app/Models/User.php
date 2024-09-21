@@ -149,6 +149,7 @@ class User extends Authenticatable
         $data = [
             'id' => Auth::id(),
             'username' => $user['username'],
+            'name' => $user['name'],
             'description' => $user['description'],
             'tiktok' => $user['tiktok'] ?? null,
             'instagram' => $user['instagram'] ?? null,

@@ -21,6 +21,10 @@
                             <button type="button" id="btn-upload-profile" class="btn-upload"><i class="fa-solid fa-camera"></i></button>
                         </div>
                         <div class="input-form">
+                            <label class="label" for="name">Seu nome</label>
+                            <input type="text" class="input" name="namex" id="name" placeholder="Insira seu nome" value="{{ $user['name'] }}"></input>
+                        </div>
+                        <div class="input-form">
                             <label class="label" for="username">Nome de usuário</label>
                             <div class="input-mock">
                                 <span class="mock">{{ env('USER_URL') }}/</span><input type="text" oninput="transformUsername()" class="input" id="username" name="username" placeholder="/seu-usuario" value="{{ $user['user'] }}" required></input>

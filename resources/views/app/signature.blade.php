@@ -18,19 +18,19 @@
                         <div class="input-form">
                             <label class="label" for="1m">Assinatura de 1 mês</label>
                             <div class="input-mock mock-icon">
-                                <span class="mock icon">R$</span><input type="text" class="input money" id="1m" name="price_1" mode placeholder="0,00" value="{{ $user['price_1'] }}" inputmode="numeric" required></input>
+                                <span class="mock icon">R$</span><input type="text" class="input money" id="1m" name="price_1" placeholder="0,00" value="{{ number_format($user['price_1'], 2, ',', '.') }}" inputmode="numeric" required></input>
                             </div>
                         </div>
                         <div class="input-form">
                             <label class="label" for="3m">Assinatura de 3 meses</label>
                             <div class="input-mock mock-icon">
-                                <span class="mock icon">R$</span><input type="text" class="input money" id="3m" name="price_3" placeholder="0,00" value="{{ $user['price_3'] }}" inputmode="numeric" required></input>
+                                <span class="mock icon">R$</span><input type="text" class="input money" id="3m" name="price_3" placeholder="0,00" value="{{ number_format($user['price_3'], 2, ',', '.') }}" inputmode="numeric" required></input>
                             </div>
                         </div>
                         <div class="input-form">
                             <label class="label" for="6m">Assinatura de 6 meses</label>
                             <div class="input-mock mock-icon">
-                                <span class="mock icon">R$</span><input type="text" class="input money" id="6m" name="price_6" placeholder="0,00" value="{{ $user['price_6'] }}" inputmode="numeric" required></input>
+                                <span class="mock icon">R$</span><input type="text" class="input money" id="6m" name="price_6" placeholder="0,00" value="{{ number_format($user['price_6'], 2, ',', '.') }}" inputmode="numeric" required></input>
                             </div>
                         </div>
                         <div class="input-form">

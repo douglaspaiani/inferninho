@@ -78,6 +78,11 @@ a:hover, button:hover {
   text-align: center;
   margin-bottom: 40px;
 }
+.subtitle {
+  color: #ccc;
+  font-size: 15px;
+  margin-bottom: 20px;
+}
 /* FORMS */
 .input-form {
   margin-bottom: 20px;
@@ -119,6 +124,7 @@ a:hover, button:hover {
   color: #fff;
   text-transform: uppercase;
   font-weight: 500;
+  font-size:12px;
 }
 .button i {
   position: absolute;
@@ -625,6 +631,15 @@ a:hover, button:hover {
   display: flex;
   align-items: center;
   position: relative;
+}
+.UserLineProfile .img .img-profile {
+  width: 60px;
+  height: 60px;
+  display: inline-block;
+  border-radius: 100px;
+  border:solid 4px #575757;
+  background-position: center;
+  background-size: cover;
 }
 .UserLineProfile span {
   color: #fff;
@@ -1140,6 +1155,10 @@ box-shadow: 0px 0px 43px -4px rgba(0,0,0,0.75);
 }
 .cycle .plan label span {
   margin-left:10px;
+  font-size: 13px;
+}
+.cycle .plan label span b {
+  font-size:16px;
 }
 .cycle .plan input {
   position: absolute;
@@ -1177,4 +1196,15 @@ box-shadow: 0px 0px 43px -4px rgba(0,0,0,0.75);
 }
 .cycle .plan input:checked + label::after {
   background-color: var(--color-primary);
+}
+.cycle .plan sub {
+  font-size:10px;
+  font-weight:bold;
+}
+.empty {
+  color: #aaa;
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  font-size: 11px;
 }

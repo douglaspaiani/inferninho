@@ -34,18 +34,24 @@
     </div>
     <div class="cycle">
         <h3>Selecione um pacote:</h3>
+        @if(!empty($user->price_1))
         <div class="plan">
             <input type="radio" name="plan" value="{{ $user->price_1 }}" id="price_1" checked>
             <label for="price_1"><span>1 mês por <b>R$ {{ number_format($user->price_1, 2, ',', '.') }}</b></span></label>
         </div>
+        @endif
+        @if(!empty($user->price_3))
         <div class="plan">
             <input type="radio" name="plan" value="{{ $user->price_3 }}" id="price_3">
-            <label for="price_3"><span>3 meses por <b>R$ {{ number_format($user->price_3, 2, ',', '.') }}</b></span></label>
+            <label for="price_3"><span>3 meses por <b>R$ {{ number_format($user->price_3, 2, ',', '.') }}</b> <sub>({{ $discounts['discount_3'] }}% OFF)</sub></span></label>
         </div>
+        @endif
+        @if(!empty($user->price_6))
         <div class="plan">
             <input type="radio" name="plan" value="{{ $user->price_6 }}" id="price_6">
-            <label for="price_6"><span>6 meses por <b>R$ {{ number_format($user->price_6, 2, ',', '.') }}</b></span></label>
+            <label for="price_6"><span>6 meses por <b>R$ {{ number_format($user->price_6, 2, ',', '.') }}</b> <sub>({{ $discounts['discount_6'] }}% OFF)</sub></span></label>
         </div>
+        @endif
     </div>
     <div class="subscribe">
         <h3>Selecione a forma de pagamento:</h3>

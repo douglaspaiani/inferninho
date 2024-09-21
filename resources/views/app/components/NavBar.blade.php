@@ -7,7 +7,7 @@
         <i class="fa-solid fa-bars"></i>
     </button>
     <div class="Menu">
-        <a href="{{ route('following') }}"><i class="fa-regular fa-user"></i> Seguindo</a>
+        <a href="{{ route('following') }}"><i class="fa-regular fa-user"></i> Minhas assinaturas</a>
         <a href="{{ route('credit-cards') }}"><i class="fa-regular fa-credit-card"></i> Meus cartões</a>
         <a href="#"><i class="fa-regular fa-circle-play"></i> Seja Criador</a>
         <hr color="#4b4b4b"/>

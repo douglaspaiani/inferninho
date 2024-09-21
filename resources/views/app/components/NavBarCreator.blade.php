@@ -5,8 +5,8 @@
             <span>Editar perfil</span>
         </a>
         <a href="#" class="subBox">
-            <i class="fa-solid fa-gear"></i>
-            <span>Assinatura</span>
+            <i class="fa-solid fa-coins"></i>
+            <span>Créditos</span>
         </a>
     </div>
     <a href="{{ route('newPost') }}" class="photo">

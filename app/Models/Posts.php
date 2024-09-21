@@ -31,6 +31,10 @@ class Posts extends Model
         $this->UploadService = new UploadService;
     }
 
+    public function user(){
+        return $this->belongsTo(User::class, 'user', 'id');
+    }
+
     public function NewPostMedia(Request $request): void
     {
         $photosArray = [];
@@ -71,7 +75,7 @@ class Posts extends Model
     }
 
     public function getPostsHome(){
-        return $this->PostRepository->getPostAndUser();
+        return $this->PostRepository->getPostsHome();
     }
 
     public function getPostsByUsername(string $username){

@@ -23,7 +23,7 @@ Route::middleware('auth')->prefix('app')->group(function () {
     Route::post('/posts/{id}/like', [\App\Http\Controllers\PostController::class, 'Like'])->name('like');
     Route::get('/new-post', [\App\Http\Controllers\PostController::class, 'NewPostPage'])->name('newPost');
     Route::post('/new-post', [\App\Http\Controllers\PostController::class, 'NewPost'])->name('newPost');
-    Route::get('/following', [\App\Http\Controllers\UserController::class, 'FollowingPage'])->name('following');
+    Route::get('/following', [\App\Http\Controllers\SubscriptionsController::class, 'FollowingPage'])->name('following');
     // Credit cads
     Route::get('/credit-cards', [\App\Http\Controllers\UserController::class, 'CreditCardsPage'])->name('credit-cards');
     Route::get('/add-credit-card', [\App\Http\Controllers\UserController::class, 'AddCreditCardPage'])->name('add-credit-card');
@@ -32,8 +32,8 @@ Route::middleware('auth')->prefix('app')->group(function () {
 // User Profile
 Route::middleware('auth')->group(function () {
     Route::get('/{username}', [\App\Http\Controllers\UserController::class, 'UserProfilePage'])->name('username');
-    Route::get('/{username}/subscribe', [\App\Http\Controllers\UserController::class, 'SubscribePage'])->name('subscribe');
-    Route::post('/{username}/subscribe', [\App\Http\Controllers\UserController::class, 'SubscribePage'])->name('subscribe');
+    Route::get('/{username}/checkout', [\App\Http\Controllers\SubscriptionsController::class, 'CheckoutPage'])->name('checkout');
+    Route::post('/{username}/checkout', [\App\Http\Controllers\SubscriptionsController::class, 'CheckoutPage'])->name('checkout');
 });    
 
 

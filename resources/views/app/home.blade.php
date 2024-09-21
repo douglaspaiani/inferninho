@@ -16,6 +16,9 @@
         date="{{ $post->created_at }}"
     />
 @endforeach
+@if(count($posts) == 0)
+<div class="empty">Nenhum conteúdo para você no momento.</div>
+@endif
 </div>
 
 <x-navbar-creator-component/>
