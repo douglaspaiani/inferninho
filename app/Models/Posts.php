@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Jobs\ProcessPosts;
 use App\Repositories\PostRepository;
 use App\Services\UploadService;
 use Exception;
@@ -10,7 +9,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\URL;
 
 class Posts extends Model
 {

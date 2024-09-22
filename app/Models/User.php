@@ -13,9 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
-use Spatie\ImageOptimizer\OptimizerChainFactory;
 
 class User extends Authenticatable
 {
@@ -42,7 +40,6 @@ class User extends Authenticatable
         'birth',
         'photo',
         'cover',
-        'cards',
         'token',
         'username',
         'top',
@@ -61,6 +58,14 @@ class User extends Authenticatable
         'price_1',
         'price_3',
         'price_6',
+        'hidden_name',
+        'zipcode',
+        'number',
+        'address',
+        'complement',
+        'neighborhood',
+        'city',
+        'state',
         'email_verified_at'
     ];
 
@@ -168,6 +173,26 @@ class User extends Authenticatable
 
     }
 
+    public function SaveConfig(Request $request){
+        $user = $request->all();
+
+        // mount data
+        $data = [
+            'id' => Auth::id(),
+            'hidden_name' => empty($user['hidden_name']) ? 0 : 1,
+            'zipcode' => $user['zipcode'] ?? null,
+            'address' => $user['address'] ?? null,
+            'number' => $user['number'] ?? null,
+            'complement' => $user['complement'] ?? null,
+            'neighborhood' => $user['neighborhood'] ?? null,
+            'city' => $user['city'] ?? null,
+            'state' => $user['state'] ?? null
+        ];
+
+        $this->UserRepository->update($data);
+
+    }
+
     public function UpdateSignature(Request $request){
         $user = $request->all();
 
@@ -181,6 +206,10 @@ class User extends Authenticatable
 
         $this->UserRepository->update($data);
 
+    }
+
+    public function search(string $name){
+        return $this->UserRepository->search($name);
     }
 
 }

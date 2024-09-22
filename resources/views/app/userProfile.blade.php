@@ -4,7 +4,14 @@
 <div class="container pageProfile">
     <div class="userPanel">
         <span class="photo" style="background-image:url('{{ $user->photo }}')"></span>
-        <h1 class="name">{{ $user->name }}</h1>
+        <h1 class="name">{{ $user->name }}
+            @if($user->verify == 1)
+                <i class="verify fa-solid fa-circle-check" aria-hidden="true"></i>
+            @endif
+            @if($user->top == 1)
+                <i class="king fa-solid fa-crown" aria-hidden="true"></i>
+            @endif
+        </h1>
         <p class="username">{{ $user->username }}</p>
         <div class="description">{{ $user->description }}</div>
         <button type="button" id="options"><i class="fa-solid fa-ellipsis-vertical"></i></button>

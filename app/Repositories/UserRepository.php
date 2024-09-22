@@ -14,6 +14,16 @@ class UserRepository {
         return User::find($id);
     }
 
+    public function search(string $name){
+        return User::where('name', 'LIKE', "%{$name}%")
+        ->where('creator', 1)
+        ->orWhere('username', 'LIKE', "%{$name}%")
+        ->limit(6)
+        ->orderBy('verify', 'desc')
+        ->orderBy('top', 'desc')
+        ->get(['name', 'username', 'photo', 'verify', 'top']);
+    }
+
     public function update(array $data){
         return User::find($data['id'])->update($data);
     }

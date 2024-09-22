@@ -34,6 +34,9 @@
             <button id="like-{{ $id }}" type="button" class="like button-like" onclick="likePost({{ $id }}, {{ $likes }});">
                 <i class="fa-regular fa-heart"></i> <span>{{ $likes }}</span>
             </button>
+            <a href="#" class="button-like">
+                <i class="fa-regular fa-comment"></i> <span>3</span>
+            </a>
             <a href="#" class="button-like"><i class="fa-solid fa-dollar-sign"></i> <span>Enviar um mimo</span></a>
         </div>
     </div>

@@ -37,7 +37,14 @@ return new class extends Migration
             $table->float('price_1')->nullable();
             $table->float('price_3')->nullable();
             $table->float('price_6')->nullable();
-            $table->json('cards')->nullable();
+            $table->string('zipcode')->nullable();
+            $table->string('address')->nullable();
+            $table->string('neighborhood')->nullable();
+            $table->integer('number')->nullable();
+            $table->string('complement')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->integer('hidden_name')->default(0);
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

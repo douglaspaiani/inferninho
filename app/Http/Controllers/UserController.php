@@ -7,8 +7,6 @@ use App\Models\Subscriptions;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\URL;
 
 class UserController extends Controller
 {
@@ -61,11 +59,24 @@ class UserController extends Controller
         }
     }
 
-    public function CreditCardsPage(){
-        return view('app.creditCards');
+    public function ConfigurationsPage(){
+        $user = new User;
+        return view('app.configurations', ['user' => $user->getUser()]);
     }
 
-    public function AddCreditCardPage(){
-        return view('app.addCreditCard');
+    public function ConfigurationsPost(Request $request){
+        try {
+            $user = new User;
+            $user->SaveConfig($request);
+            return redirect()->route('configurations')->with(['success' => 'Configurações alteradas com sucesso!']);
+        } catch (Exception $e){
+            return redirect()->route('configurations')->withErrors(['error' => $e->getMessage()]);
+        }
     }
+
+    public function SearchPost(string $search){
+        $user = new User;
+        return response()->json($user->search($search));
+    }
+    
 }

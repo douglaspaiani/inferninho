@@ -12,3 +12,5 @@
   <img class='loading-gif' alt='loading' src="{{ URL::asset('app/images/logo.png') }}"/>
   <i class="fa-solid fa-spinner"></i>
 </div>
+<div class="overlay-notify"></div>
+<div class="overlay-search"></div>

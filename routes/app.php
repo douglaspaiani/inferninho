@@ -25,8 +25,15 @@ Route::middleware('auth')->prefix('app')->group(function () {
     Route::post('/new-post', [\App\Http\Controllers\PostController::class, 'NewPost'])->name('newPost');
     Route::get('/following', [\App\Http\Controllers\SubscriptionsController::class, 'FollowingPage'])->name('following');
     // Credit cads
-    Route::get('/credit-cards', [\App\Http\Controllers\UserController::class, 'CreditCardsPage'])->name('credit-cards');
-    Route::get('/add-credit-card', [\App\Http\Controllers\UserController::class, 'AddCreditCardPage'])->name('add-credit-card');
+    Route::get('/credit-cards', [\App\Http\Controllers\CreditCardsController::class, 'CreditCardsPage'])->name('credit-cards');
+    Route::get('/add-credit-card', [\App\Http\Controllers\CreditCardsController::class, 'AddCreditCardPage'])->name('add-credit-card');
+    Route::post('/add-credit-card', [\App\Http\Controllers\CreditCardsController::class, 'AddCreditCardPost'])->name('add-credit-card');
+    Route::post('/remove-credit-card/{id}', [\App\Http\Controllers\CreditCardsController::class, 'DeleteCreditCard'])->name('remove-credit-card');
+    // Configurations
+    Route::get('/configurations', [\App\Http\Controllers\UserController::class, 'ConfigurationsPage'])->name('configurations');
+    Route::post('/configurations', [\App\Http\Controllers\UserController::class, 'ConfigurationsPost'])->name('configurations');
+    // Search
+    Route::get('/search/{search}', [\App\Http\Controllers\UserController::class, 'SearchPost'])->name('search');
 });
 
 // User Profile

@@ -22,7 +22,7 @@
                         </div>
                         <div class="input-form">
                             <label class="label" for="name">Seu nome</label>
-                            <input type="text" class="input" name="namex" id="name" placeholder="Insira seu nome" value="{{ $user['name'] }}"></input>
+                            <input type="text" class="input" name="name" id="name" placeholder="Insira seu nome" value="{{ $user['name'] }}" required></input>
                         </div>
                         <div class="input-form">
                             <label class="label" for="username">Nome de usuário</label>

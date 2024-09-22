@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\View\Components\app\CreditCardComponent;
 use App\View\Components\app\ErrorsComponent;
 use App\View\Components\app\ItemListProfileComponent;
 use App\View\Components\app\NavBarComponent;
@@ -30,5 +31,6 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('navbar-creator-component', NavBarCreatorComponent::class);
         Blade::component('item-list-profile-component', ItemListProfileComponent::class);
         Blade::component('errors-component', ErrorsComponent::class);
+        Blade::component('credit-card-component', CreditCardComponent::class);
     }
 }

@@ -77,11 +77,16 @@ a:hover, button:hover {
   font-size: 17px;
   text-align: center;
   margin-bottom: 40px;
+  margin-top: 40px;
 }
 .subtitle {
   color: #ccc;
   font-size: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+}
+.sub {
+  color: #aaa;
+  font-size: 12px;
 }
 /* FORMS */
 .input-form {
@@ -107,7 +112,98 @@ a:hover, button:hover {
   box-sizing: border-box;
   font-family: var(--font);
 }
+#SearchBar {
+  width:90%;
+  height: 60px;
+  left: 5%;
+  display: none;
+  position:fixed;
+  top: 70px;
+  background-color: var(--color-primary);
+  z-index: 99999; 
+  padding-left: 10px;
+  padding-right: 10px;
+  box-sizing: border-box;
+  border-radius: 7px;
+  -webkit-box-shadow: 0px 0px 30px -7px rgba(0,0,0,0.51);
+-moz-box-shadow: 0px 0px 30px -7px rgba(0,0,0,0.51);
+box-shadow: 0px 0px 30px -7px rgba(0,0,0,0.51);
 
+}
+#SearchBar input {
+  width: 80%;
+  line-height: 60px;
+  background-color: transparent;
+  border: 0;
+  color: #fff;
+  font-weight: bold;
+}
+#SearchBar i {
+  color: #fff;
+  margin-right: 6px;
+}
+#SearchBar input::placeholder {
+  color: #fff;
+  font-weight: initial;
+}
+#ResultsSearch {
+  background-color: #383838;
+  position: fixed;
+  top: 137px;
+  width: 90%;
+  left: 5%;
+  border-radius: 7px;
+  display: none;
+  z-index: 999999;
+  padding: 8px;
+  padding-bottom: 0;
+  box-sizing: border-box;
+  -webkit-box-shadow: 0px 0px 30px -7px rgba(0,0,0,0.51);
+-moz-box-shadow: 0px 0px 30px -7px rgba(0,0,0,0.51);
+box-shadow: 0px 0px 30px -7px rgba(0,0,0,0.51);
+}
+#ResultsSearch .user {
+  background-color: #262626;
+  border-radius: 7px;
+  width:100%;
+  display: flex;
+  padding: 13px;
+  color: #c7c7c7;
+  box-sizing: border-box;
+  margin-bottom:8px;
+}
+#ResultsSearch .none {
+  text-align: center;
+  color: #c7c7c7;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  font-weight: initial;
+}
+#ResultsSearch .img {
+  width: 50px;
+  height: 50px;
+  display: block;
+  border-radius: 100px;
+  background-size: cover;
+  background-position: center;
+  margin-right: 10px;
+  border: solid 3px #575757;
+}
+#ResultsSearch p {
+  margin: 0;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 13px;
+}
+#ResultsSearch sub {
+  font-size: 10px;
+}
+#ResultsSearch .king {
+  color: rgb(255, 217, 0);
+}
+#ResultsSearch .verify {
+  color: rgb(0, 145, 255);
+}
 .input:focus {
   border-color: var(--color-primary);
 }
@@ -701,20 +797,38 @@ a:hover, button:hover {
 }
 .Card {
   width: 100%;
-  padding: 15px;
-  border:solid 2px #3b3b3b;
+  padding: 23px;
+  border:solid 2px #2d2d2d;
   color: #b7b7b7;
   display: block;
   border-radius: 10px;
   box-sizing:border-box;
   position: relative;
+  background-image: url('../images/bg-card.jpg');
+  background-size: 102%;
+  background-position: center;
+  -webkit-box-shadow: 0px 0px 30px -7px rgba(0,0,0,0.51);
+-moz-box-shadow: 0px 0px 30px -7px rgba(0,0,0,0.51);
+box-shadow: 0px 0px 30px -7px rgba(0,0,0,0.51);
+
+}
+.Card .brand {
+  width: 75px;
+  height: 46px;
+  display: block;
+  background-size: cover;
+  border-radius: 7px;
+}
+.Card .validate span {
+  display: block;
+  font-size: 10px;
 }
 .RemoveCard {
   float: right;
   position: absolute;
-  top:45%;
-  right:30px;
-  color: rgb(175, 21, 21);
+  top:9px;
+  right:9px;
+  color: var(--color-primary);
   font-size: 12px;
 }
 .addCard {
@@ -932,6 +1046,7 @@ textarea.input {
   color: #fff;
   display: block;
   text-align: center;
+  font-size: 23px;
 }
 .userPanel .username {
   color: #aaaaaa;
@@ -942,6 +1057,17 @@ textarea.input {
 .userPanel .description {
   color: #aaaaaa;
   text-align: center;
+}
+.userPanel .name i {
+  margin-left: 3px;
+  margin-right: 3px;
+  font-size: 16px;
+}
+.userPanel .name i.verify {
+  color: rgb(0, 145, 255);
+}
+.userPanel .name i.king {
+  color: rgb(255, 217, 0);
 }
 .userPanel .social {
   width: 100%;
@@ -1207,4 +1333,114 @@ box-shadow: 0px 0px 43px -4px rgba(0,0,0,0.75);
   margin-top: 40px;
   margin-bottom: 40px;
   font-size: 11px;
+}
+.checkbox {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+.checkbox input {
+  opacity: 0;
+  position: absolute;
+  cursor: pointer;
+}
+.checkbox span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #ddd;
+  border: 2px solid #ccc;
+  border-radius: 3px;
+  transition: background-color 0.3s ease;
+}
+.checkbox input:checked + span {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+.checkbox input:checked + span::after {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 3px;
+  width: 6px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.label-checkbox {
+  color: #aaa;
+  margin-left: 10px;
+  font-size: 13px;
+}
+.section {
+  padding: 10px;
+}
+.input-checkbox {
+  padding: 15px;
+}
+.notification {
+  display: none;
+  width: 100%;
+  height:auto;
+  padding: 30px;
+  position: fixed;
+  bottom: -100%;
+  left: 0;
+  background-color: var(--block-background);
+  color: #aaa;
+  box-sizing: border-box;
+  text-align: center;
+  -webkit-box-shadow: 0px -8px 60px -25px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px -8px 60px -25px rgba(0,0,0,0.75);
+box-shadow: 0px -8px 60px -25px rgba(0,0,0,0.75);
+border-radius:7px;
+z-index: 999;
+}
+.notification h4 {
+  margin-top: 15px;
+  padding-top: 0;
+}
+.notification button {
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  background-color: #616161;
+  color: #fff;
+  border-radius: 7px;
+  border: 0;
+  margin-top: 6px;
+}
+.notification::before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 30%;
+  height: 10px;
+  border-radius: 100px;
+  background-color: #4c4c4c;
+  top: 12px;
+  left: 35%;
+}
+.notification button:hover {
+  background-color: #848484;
+}
+.notification button.confirm {
+  background-color: var(--color-primary);
+}
+.overlay-notify, .overlay-search {
+  background-color: #1818189c;
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 998;
+}
+.overlay-search {
+  background-color: #181818c3;
 }
