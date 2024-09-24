@@ -3,6 +3,7 @@
 namespace App\View\Components\app;
 
 use App\Models\Comments;
+use App\Models\PhotosSold;
 use App\Models\Posts;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -28,6 +29,9 @@ class PostComponent extends Component
         public string $date,
         public int $nocomments,
         public float $value,
+        public int $public,
+        public float $price,
+        public int $timer
     ) {}
  
     public function render(): View
@@ -74,6 +78,15 @@ class PostComponent extends Component
             $comment->ReadComments($this->id);
         }
 
-        return view('app.components.post.PostComponent', ['images' => $images, 'photo_url' => $photoUrl, 'comments' => $comments ?? null, 'countComments' => $countComments, 'user_id' => $user_id]);
+        // verify photo purchased
+        $purchased = new PhotosSold;
+        $sold = 0;
+        if($this->value > 0){
+            if($purchased->VerifyPurchased($this->id) == true){
+                $sold = 1;
+            }
+        }
+        
+        return view('app.components.post.PostComponent', ['sold' => $sold, 'images' => $images, 'photo_url' => $photoUrl, 'comments' => $comments ?? null, 'countComments' => $countComments, 'user_id' => $user_id]);
     }
 }

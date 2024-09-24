@@ -14,7 +14,7 @@
     <div class="Menu">
         <a href="{{ route('following') }}"><i class="fa-regular fa-user"></i> Minhas assinaturas</a>
         <a href="{{ route('credit-cards') }}"><i class="fa-regular fa-credit-card"></i> Meus cartões</a>
-        <a href="{{ route('credit-cards') }}"><i class="fa-regular fa-image"></i> Fotos compradas</a>
+        <a href="{{ route('purchased') }}"><i class="fa-regular fa-image"></i> Fotos compradas</a>
         <a href="#"><i class="fa-regular fa-circle-play"></i> Seja Criador</a>
         <hr color="#4b4b4b"/>
         <a href="{{ route('configurations') }}"><i class="fa-solid fa-gear"></i> Configurações</a>

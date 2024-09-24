@@ -1587,12 +1587,15 @@ textarea {
 }
 .grid .item {
   display: block;
-  width: 100%;
+  width: 33.33%;
   height: 145px;
+  line-height: 145px;
   background-size: cover;
   background-position: center;
   border-radius: 7px;
   border: solid 2px #434343;
+  text-align: center;
+  color: #fff;
 }
 .opcional-posting {
   margin-bottom:20px;
@@ -1662,4 +1665,68 @@ box-shadow: 0px 0px 38px -7px rgba(0,0,0,0.75);
   border-radius: 7px;
   display: block;
   margin-top: 20px;
+}
+.public {
+  background-color: var(--color-primary);
+  color: #fff;
+  padding: 20px;
+  border-radius: 7px;
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+  top: 10px;
+  margin-bottom: 10px;
+}
+.public h4 {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+.public span {
+  font-size: 12px;
+}
+.public span b {
+  font-size: 18px !important;
+}
+.public a {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  position: absolute;
+  top: 23px;
+  right: 23px;
+  border-radius: 7px;
+}
+.posting .timer {
+  background-color: #de932b;
+  position: absolute;
+  color: #fff;
+  padding: 10px;
+  width: 30px;
+  line-height: 30px;
+  display: block;
+  text-align: center;
+  border-radius: 7px;
+  font-size: 18px;
+  top: 10px;
+  right: 10px;
+  opacity: 0.6;
+}
+.promote {
+  color: #aaa;
+  text-align: center;
+  width: 100%;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.promote i {
+  margin-left: 10px;
+  margin-right: 10px;
+  color: var(--color-primary);
+}
+.solds h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+  color: #aaa;
+  font-size: 14px;
 }

@@ -22,7 +22,9 @@
         <a href="#"><i>{{ $user->username }}</i></a>
     </div>
 </div>
-
+@if(count($posts) == 0)
+<div class="empty">Sem conteúdos por enquanto.</div>
+@endif
         @foreach ($posts as $index => $post)
         @if ($index % 3 === 0)
             @if ($index !== 0)
@@ -33,6 +35,7 @@
         <x-post-grid-component
             image="{!! $post->photos !!}"
             id="{{ $post->id }}"
+            private="{{ $post->private }}"
         />
         @endforeach
     </div>

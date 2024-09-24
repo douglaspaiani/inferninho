@@ -18,6 +18,9 @@
         date="{{ $post->schedule }}"
         nocomments="{{ $post->nocomments }}"
         value="{{ $post->value }}"
+        public="{{ $post->public }}"
+        price="{{ $post->price_1 }}"
+        timer="{{ $post->timer }}"
     />
 
 </div>

@@ -26,7 +26,8 @@ class Posts extends Model
         'nocomments',
         'private',
         'due_date',
-        'public'
+        'public',
+        'timer'
     ];
 
     protected $PostRepository;
@@ -51,6 +52,7 @@ class Posts extends Model
     {
         $photosArray = [];
         $public = 0;
+        $timer = 0;
         $due_date = Carbon::parse('2999-12-01 00:00:00');
         $request->validate([
             'photos.*' => 'image|mimes:jpeg,png,jpg|max:2048',
@@ -65,9 +67,10 @@ class Posts extends Model
             } else {
                 $due_date = Carbon::now()->addHours(24);
             }
+            $timer = 1;
         }
         if($request->get('announce') > 0){
-            $due_date = Carbon::now()->addDays($request->get('announce'));
+            $due_date = Carbon::now()->addDays((int)$request->get('announce'));
             $public = 1;
         }
 
@@ -80,7 +83,8 @@ class Posts extends Model
             'value' => $request->get('value') ? ConvertRealToFloat($request->get('value')) : 0,
             'private' => $request->get('value') ? 1 : 0,
             'due_date' => $due_date,
-            'public' => $public
+            'public' => $public,
+            'timer' => $timer
         ];
 
         // verify empty
@@ -143,5 +147,9 @@ class Posts extends Model
 
     public function getIdUserByPost(int $id){
         return $this->PostRepository->getIdUserByPost($id);
+    }
+
+    public function getPostsPurchased(){
+        return $this->PostRepository->getPostsPurchased();
     }
 }

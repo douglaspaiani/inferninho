@@ -31,6 +31,7 @@ Route::middleware('auth')->prefix('app')->group(function () {
     Route::get('/new-post', [\App\Http\Controllers\PostController::class, 'NewPostPage'])->name('newPost');
     Route::post('/new-post', [\App\Http\Controllers\PostController::class, 'NewPost'])->name('newPost');
     Route::get('/following', [\App\Http\Controllers\SubscriptionsController::class, 'FollowingPage'])->name('following');
+    Route::get('/purchased', [\App\Http\Controllers\PhotosSoldController::class, 'PhotosPurchasedPage'])->name('purchased');
     // Credit cads
     Route::get('/credit-cards', [\App\Http\Controllers\CreditCardsController::class, 'CreditCardsPage'])->name('credit-cards');
     Route::get('/add-credit-card', [\App\Http\Controllers\CreditCardsController::class, 'AddCreditCardPage'])->name('add-credit-card');

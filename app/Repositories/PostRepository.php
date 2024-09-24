@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\PhotosSold;
 use App\Models\Posts;
 use App\Models\Subscriptions;
 use App\Models\User;
@@ -32,14 +33,14 @@ class PostRepository {
         $post = DB::table('posts')
         ->join('users', 'posts.user', '=', 'users.id')
         ->where('posts.id', $id)
-        ->select('posts.*', 'users.name', 'users.photo', 'users.username', 'users.verify', 'users.top')
+        ->select('posts.*', 'users.name', 'users.photo', 'users.username', 'users.verify', 'users.top', 'users.price_1', 'posts.timer')
         ->first();
         return $post;
     }
 
     public function getPostsByUsername(string $username){
         $id = User::where('username', $username)->first();
-        return Posts::where('user', $id->id)->orderBy('id', 'desc')->get();
+        return Posts::where('user', $id->id)->where('public', 0)->orderBy('id', 'desc')->get();
     }
 
     public function setPost(array $data){
@@ -83,7 +84,8 @@ class PostRepository {
         ->where('posts.schedule', '<=', Carbon::now()->format('Y-m-d H:i:s'))
         ->where('posts.due_date', '>=', Carbon::now()->format('Y-m-d H:i:s'))
         ->whereIn('posts.user', $users)
-        ->select('posts.*', 'users.name', 'users.photo', 'users.username', 'users.verify', 'users.top')
+        ->orWhere('posts.public', 1)
+        ->select('posts.*', 'users.name', 'users.photo', 'users.username', 'users.verify', 'users.top', 'users.price_1', 'posts.timer')
         ->orderBy('posts.id', 'desc')
         ->get();
         
@@ -93,5 +95,10 @@ class PostRepository {
     public function getIdUserByPost(int $id){
         $post = Posts::where('id', $id)->get(['user'])->first();
         return $post->user;
+    }
+
+    public function getPostsPurchased(){
+        $posts = PhotosSold::where('subscriber', Auth::id())->pluck('post');
+        return Posts::whereIn('id', $posts)->get(['photos', 'id']);
     }
 }

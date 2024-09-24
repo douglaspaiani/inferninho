@@ -1,4 +1,7 @@
 <div class="Post post-{{ $id }}" id="app">
+    @if (Route::currentRouteName() == 'home' && $public == 1 || Route::currentRouteName() == 'post' && $public == 1)
+        <div class="promote"><i class="fa-solid fa-fire-flame-curved"></i> Promovido <i class="fa-solid fa-fire-flame-curved"></i></div>
+    @endif
     @if($user_id == Auth::id())
     <div id="options-post" data-id="{{ $id }}" class="Menu menu-post">
         <a href="{{ route('editPost', ['id' => $id]) }}" class="edit"><i class="fa-solid fa-pen"></i> Editar descrição</a>
@@ -30,7 +33,7 @@
             {{ $description }}
         </div>
         @endif
-        @if($value > 0)
+        @if($value > 0 && $sold == 0)
         <div class="imgpost">
             <div class="buy">
                 <i class="fa-regular fa-eye-slash"></i>
@@ -49,12 +52,23 @@
         <div class="imgPost">
             @if(!empty($image))
                 @foreach ($images as $photo)
-                    <span class="image" style="background-image: url('{{ $photo_url }}{{ $photo }}')"></span>
+                    <span class="image" style="background-image: url('{{ $photo_url }}{{ $photo }}')">
+                        @if($timer == 1)
+                        <div class="timer"><i class="fa-solid fa-stopwatch"></i></div>
+                        @endif
+                    </span>
                 @endforeach
             @endif
         </div>
         @endif
-        @if($value == 0)
+        @if (Route::currentRouteName() == 'home' && $public == 1 || Route::currentRouteName() == 'post' && $public == 1)
+            <div class="public">
+                <h4>Assine esse perfil!</h4>
+                <span>Por apenas <b>R$ {{ number_format($price, 2, ',', '.')  }}</b></span>
+                <a href="{{ $link }}">Ver perfil</a>
+            </div>
+        @endif
+        @if($value == 0 || $sold == 1)
         <div class="infos">
             <button id="like-{{ $id }}" type="button" class="like button-like" onclick="likePost({{ $id }}, {{ $likes }});">
                 <i class="fa-regular fa-heart"></i> <span>{{ $likes }}</span>

@@ -17,7 +17,8 @@ class PostGridComponent extends Component
 
     public function __construct(
         public string $image,
-        public int $id
+        public int $id,
+        public int $private
     ) {}
  
     public function render(): View
