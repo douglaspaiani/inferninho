@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Repositories\PostRepository;
 use App\Services\UploadService;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +18,15 @@ class Posts extends Model
     protected $fillable = [
         'user',
         'description',
-        'photos'
+        'photos',
+        'value',
+        'schedule',
+        'likes',
+        'video',
+        'nocomments',
+        'private',
+        'due_date',
+        'public'
     ];
 
     protected $PostRepository;
@@ -29,19 +38,50 @@ class Posts extends Model
         $this->UploadService = new UploadService;
     }
 
-    public function user(){
-        return $this->belongsTo(User::class, 'user', 'id');
+    public function comments()
+    {
+        return $this->hasMany(Comments::class, 'post');
+    }
+
+    public function getPost(int $id){
+        return $this->PostRepository->getPost($id);
     }
 
     public function NewPostMedia(Request $request): void
     {
         $photosArray = [];
+        $public = 0;
+        $due_date = Carbon::parse('2999-12-01 00:00:00');
         $request->validate([
             'photos.*' => 'image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         $photos = $request->file('photos');
         $video = $request->file('video');
+
+        if($request->get('24h') == 1){
+            if($request->get('schedule')){
+                $due_date = Carbon::parse($request->get('schedule'))->addHours(24);
+            } else {
+                $due_date = Carbon::now()->addHours(24);
+            }
+        }
+        if($request->get('announce') > 0){
+            $due_date = Carbon::now()->addDays($request->get('announce'));
+            $public = 1;
+        }
+
+        // mout data
+        $data = [
+            'user' => Auth::id(),
+            'description' => $request->get('description') ?? null,
+            'schedule' => $request->get('schedule') ? Carbon::parse($request->get('schedule'))->format('Y-m-d H:i:s') : Carbon::now(),
+            'nocomments' => $request->get('nocomments') ?? 0,
+            'value' => $request->get('value') ? ConvertRealToFloat($request->get('value')) : 0,
+            'private' => $request->get('value') ? 1 : 0,
+            'due_date' => $due_date,
+            'public' => $public
+        ];
 
         // verify empty
         if(empty($photos) && empty($video)){
@@ -60,16 +100,23 @@ class Posts extends Model
                 array_push($photosArray, $upload);
             }
 
-            $data = [
-                'user' => Auth::id(),
-                'photos' => serialize($photosArray),
-                'description' => $request->get('description') ?? null
-            ];
+            $data['photos'] = serialize($photosArray);
 
         }
 
         $this->PostRepository->setPost($data);
+    }
 
+    public function EditPost(int $id, Request $request){
+        $data = [
+            'id' => $id,
+            'description' => $request->get('description')
+        ];
+        $this->PostRepository->update($data);
+    }
+
+    public function DeletePost(int $id){
+        $this->PostRepository->DeletePost($id);
     }
 
     public function getPostsHome(){
@@ -92,5 +139,9 @@ class Posts extends Model
         $post = $this->PostRepository->getById($idPost);
         $post->increment('likes');
         return $post->likes;
+    }
+
+    public function getIdUserByPost(int $id){
+        return $this->PostRepository->getIdUserByPost($id);
     }
 }

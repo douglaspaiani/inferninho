@@ -5,25 +5,32 @@
 <div class="container page">
 <x-errors-component/>
 <a href="{{ route('home') }}" class="Back"><i class="fa-solid fa-chevron-left"></i> Voltar</a>
+@if($user->creator == 1)
 <a href="{{ $user['link'] }}" class="right"><i class="fa-solid fa-user" style="margin-right:8px"></i> Ver meu perfil</a>
                 <h2 class="title" style="margin-top: 50px">Editar perfil</h2>
+@endif
                 <div class="tabs">
                     <a href="#" class="active">Editar perfil</a>
+                    @if($user->creator == 1)
                     <a href="{{ route('signature') }}">Planos de assinatura</a>
+                    @endif
                 </div>
                 <div class="AddCard boxContent forTabs">
                     <form method="POST" action="{{ route('profile') }}" enctype="multipart/form-data">
                         @csrf
+                        @if($user->creator == 1)
                         <div class="input-form input-upload">
                             <label class="label" for="username" style="text-align: center;margin-top:30px">Foto de perfil</label>
                             <span id="photo-profile" class="photo-profile" style="background-image:url('{{ $user['photo'] }}')">
                             <input type="file" id="upload-photo" name="photo" style="display: none">
                             <button type="button" id="btn-upload-profile" class="btn-upload"><i class="fa-solid fa-camera"></i></button>
                         </div>
+                        @endif
                         <div class="input-form">
                             <label class="label" for="name">Seu nome</label>
                             <input type="text" class="input" name="name" id="name" placeholder="Insira seu nome" value="{{ $user['name'] }}" required></input>
                         </div>
+                        @if($user->creator == 1)
                         <div class="input-form">
                             <label class="label" for="username">Nome de usuário</label>
                             <div class="input-mock">
@@ -59,6 +66,7 @@
                             <label class="label" for="site">Site personalizado</label>
                             <input type="url" class="input" name="site" id="site" placeholder="Insira o link do site" value="{{ $user['site'] }}"></input>
                         </div>
+                        @endif
                         <div class="input-form">
                             <div class="button btn-loading">
                                 <i class="fa-solid fa-save"></i>

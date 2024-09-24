@@ -20,7 +20,14 @@ Route::middleware('auth')->prefix('app')->group(function () {
     Route::get('/signature', [\App\Http\Controllers\UserController::class, 'SignaturePage'])->name('signature');
     Route::post('/signature', [\App\Http\Controllers\UserController::class, 'SignaturePost'])->name('signature');
     // Posting
+    Route::get('/post/{id}', [\App\Http\Controllers\PostController::class, 'PostPage'])->name('post');
+    Route::post('/post/{id}', [\App\Http\Controllers\CommentsController::class, 'PostComment'])->name('post');
+    Route::post('/edit-comment/{id}', [\App\Http\Controllers\CommentsController::class, 'EditComment'])->name('edit-comment');
+    Route::get('/delete-comment/{id}', [\App\Http\Controllers\CommentsController::class, 'DeleteComment'])->name('delete-comment');
     Route::post('/posts/{id}/like', [\App\Http\Controllers\PostController::class, 'Like'])->name('like');
+    Route::get('/edit-post/{id}', [\App\Http\Controllers\PostController::class, 'EditPostPage'])->name('editPost');
+    Route::post('/edit-post/{id}', [\App\Http\Controllers\PostController::class, 'EditPost'])->name('editPost');
+    Route::get('/delete-post/{id}', [\App\Http\Controllers\PostController::class, 'DeletePost'])->name('deletePost');
     Route::get('/new-post', [\App\Http\Controllers\PostController::class, 'NewPostPage'])->name('newPost');
     Route::post('/new-post', [\App\Http\Controllers\PostController::class, 'NewPost'])->name('newPost');
     Route::get('/following', [\App\Http\Controllers\SubscriptionsController::class, 'FollowingPage'])->name('following');
@@ -39,6 +46,7 @@ Route::middleware('auth')->prefix('app')->group(function () {
 // User Profile
 Route::middleware('auth')->group(function () {
     Route::get('/{username}', [\App\Http\Controllers\UserController::class, 'UserProfilePage'])->name('username');
+    Route::get('/{username}/grid', [\App\Http\Controllers\UserController::class, 'UserProfilePageGrid'])->name('username_grid');
     Route::get('/{username}/checkout', [\App\Http\Controllers\SubscriptionsController::class, 'CheckoutPage'])->name('checkout');
     Route::post('/{username}/checkout', [\App\Http\Controllers\SubscriptionsController::class, 'CheckoutPage'])->name('checkout');
 });    

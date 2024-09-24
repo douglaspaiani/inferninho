@@ -17,6 +17,10 @@
     />
     @endforeach
 
+    @if(count($cards) == 0)
+        <div class="empty">Você não possui nenhum cartão de crédito na sua carteira.</div>
+    @endif
+
     <a href="{{ route('add-credit-card') }}" class="addCard"><i class="fa-solid fa-plus"></i> Adicionar novo cartão</a>
 
 </div>

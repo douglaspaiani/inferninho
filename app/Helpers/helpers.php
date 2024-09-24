@@ -96,3 +96,10 @@ function verifyBrandCard($number){
     return 'Bandeira desconhecida';
 }
 
+function FormatContent($content){
+    $content = preg_replace('/[0-9]/', '*', $content);
+    $content = preg_replace('/\b(?:https?:\/\/|www\.)\S+\b/', '', $content);
+
+    return $content;
+}
+

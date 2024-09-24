@@ -1,9 +1,11 @@
 <?php
  
 namespace App\View\Components\app;
- 
+
+use App\Models\Notifications;
 use Illuminate\View\Component;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Route;
  
 class NavBarComponent extends Component
 {
@@ -12,6 +14,20 @@ class NavBarComponent extends Component
  
     public function render(): View
     {
-        return view('app.components.NavBar');
+        $notifications = new Notifications;
+        $comments = $notifications->CommentsNotifications();
+        $number = count($comments);
+
+        // remove notification comments
+        if(Route::currentRouteName() == 'post'){
+            foreach($comments as $key => $comment){
+                if($comment['id'] == request()->route('id')){
+                    unset($comments[$key]);
+                    $number = $number - 1;
+                }
+            }
+        }
+        
+        return view('app.components.NavBar', ['comments' => $comments, 'number' => $number]);
     }
 }

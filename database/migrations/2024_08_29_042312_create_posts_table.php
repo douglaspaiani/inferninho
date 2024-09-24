@@ -20,6 +20,10 @@ return new class extends Migration
             $table->integer('likes')->default(0);
             $table->integer('private')->default(0);
             $table->float('value')->default(0);
+            $table->integer('nocomments')->default(0);
+            $table->integer('public')->default(0);
+            $table->datetime('schedule')->nullable();
+            $table->datetime('due_date')->nullable();
             $table->timestamps();
         });
     }

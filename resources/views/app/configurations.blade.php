@@ -8,6 +8,7 @@
                 <x-errors-component/>
                 <form class="boxContent" method="POST" action="{{ route('configurations') }}">
                     @csrf
+                    @if($user->creator == 0)
                     <div class="section">
                         <h3 class="subtitle">Opções de privacidade</h3>
                         <div class="input-form input-checkbox">
@@ -18,6 +19,7 @@
                             <label class="label-checkbox" for="hidden_name">Ocultar meu nome nos comentários</label>
                         </div>
                     </div>
+                    @endif
                     <div class="section">
                         <h3 class="subtitle">Dados de cobrança</h3>
                         <p class="sub">Usado para compras nos cartões de créditos cadastrados.</p>

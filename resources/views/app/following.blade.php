@@ -5,6 +5,7 @@
 <div class="container page">
     <a href="{{ route('home') }}" class="Back"><i class="fa-solid fa-chevron-left"></i> Voltar</a>
     <h1 class="title">Suas assinaturas</h1>
+    <div class="boxContent">
 @foreach($users as $user)
     <x-item-list-profile-component
         name="{{ $user->name }}"
@@ -39,7 +40,7 @@
     />
 @endforeach
 @endif
-
+</div>
 </div>
 
 <x-navbar-creator-component/>

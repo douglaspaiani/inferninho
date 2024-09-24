@@ -146,16 +146,19 @@ class User extends Authenticatable
         $user = $request->all();
 
         // verify exists username
-        if($this->UserRepository->UserExists($user['username']) == true){
-            throw new Exception('Esse nome de usuário já está sendo usado.');
+        if(!empty($user['username'])){
+            if($this->UserRepository->UserExists($user['username']) == true){
+                throw new Exception('Esse nome de usuário já está sendo usado.');
+            }
         }
+        
 
         // mount data
         $data = [
             'id' => Auth::id(),
-            'username' => $user['username'],
+            'username' => $user['username'] ?? null,
             'name' => $user['name'],
-            'description' => $user['description'],
+            'description' => $user['description'] ?? null,
             'tiktok' => $user['tiktok'] ?? null,
             'instagram' => $user['instagram'] ?? null,
             'facebook' => $user['facebook'] ?? null,
@@ -210,6 +213,10 @@ class User extends Authenticatable
 
     public function search(string $name){
         return $this->UserRepository->search($name);
+    }
+
+    public function VerifyCreator(){
+        return $this->UserRepository->VerifyCreator();
     }
 
 }

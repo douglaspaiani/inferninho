@@ -27,6 +27,18 @@ class UserController extends Controller
         return view('app.userProfile', ['user' => $user, 'posts' => $posts, 'counts' => $counts, 'price' => $price, 'subscriber' => $subs->validSubscription($user['id'])]);
     }
 
+    public function UserProfilePageGrid(string $username){
+        $user = new User();
+        $post = new Posts();
+        $subs = new Subscriptions();
+        $user = $user->getUserByUsername($username);
+        $posts = $post->getPostsByUsername($username);
+        if($subs->validSubscription($user['id']) == false){
+            return redirect()->route('username', ['username' => str_replace('@', '', $user['username'])]);
+        }
+        return view('app.userProfileGrid', ['user' => $user, 'posts' => $posts]);
+    }
+
     public function ProfilePage(){
         $user = new User();
         $user = $user->getUser();

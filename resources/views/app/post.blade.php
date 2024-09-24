@@ -1,9 +1,11 @@
 @include('app.inc.header')
 <x-navbar-component/>
+
 <div class="container page">
+<a href="{{ url()->previous() }}" class="Back"><i class="fa-solid fa-chevron-left"></i> Voltar</a>
 <x-errors-component/>
-@foreach ($posts as $post)
-    <x-post-component
+
+<x-post-component
         name="{{ $post->name }}"
         photo="{{ $post->photo }}"
         user="{{ $post->username }}"
@@ -17,10 +19,7 @@
         nocomments="{{ $post->nocomments }}"
         value="{{ $post->value }}"
     />
-@endforeach
-@if(count($posts) == 0)
-<div class="empty">Nenhum conteúdo para você no momento.</div>
-@endif
+
 </div>
 
 <x-navbar-creator-component/>

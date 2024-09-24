@@ -5,6 +5,7 @@ window.addEventListener('load', function () {
 const USER_IMG = "http://localhost:8000/app/users/profile/";
 const SEARCH = "http://localhost:8000/app/search/";
 const IMAGES = "http://localhost:8000/app/images/";
+const APP_URL = "http://localhost:8000/app";
 
 function openMenu(){
     // Open menu
@@ -32,7 +33,7 @@ function transformUsername() {
 }
 
 function likePost(id, likes) {
-    fetch(`/app/posts/${id}/like`, {
+    fetch(APP_URL+`/posts/${id}/like`, {
         method: 'POST',
         headers: {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
@@ -53,11 +54,40 @@ function likePost(id, likes) {
 function successNotify(text){
     $('.notification h4').text(text);
     $('.notification .confirm').hide();
+    $('.notification .content').hide();
     $('.notification .cancel').text('OK');
 }
 
+function ConfirmEditComment(id, comment){
+    let data = {
+        comment: comment
+    };
+    fetch(APP_URL+`/edit-comment/${id}`, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'Content-Type': 'application/json',
+            },
+        body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            $('#comment-'+id+' .txt').text(comment);
+            successNotify('Seu comentário foi editado!');
+        });
+}
+
+function ConfirmDeletePost(id){
+    fetch(APP_URL+`/delete-post/${id}`)
+        .then(response => response.json())
+        .then(data => {
+            $('.post-'+id+'').fadeOut(400);
+            successNotify('Sua postagem foi apagada com sucesso!');
+        });
+}
+
 function ConfirmDeleteCard(id){
-    fetch(`/app/remove-credit-card/${id}`, {
+    fetch(APP_URL+`/remove-credit-card/${id}`, {
         method: 'POST',
         headers: {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
@@ -66,7 +96,7 @@ function ConfirmDeleteCard(id){
         })
         .then(response => response.json())
         .then(data => {
-            $('#card-'+id).fadeOut(600).hide(600);
+            $('#card-'+id).fadeOut(400).hide(400);
             successNotify('Cartão de crédito removido com sucesso!');
         });
 }
@@ -78,8 +108,10 @@ $(document).ready(function(){
         let notify = $(this).data('notify');
         let id = $(this).data('id');
         $('#'+notify).css('bottom', 0);
-        $('#'+notify).slideToggle(500);
-        $('.overlay-notify').fadeToggle(500);
+        $('#'+notify).slideToggle(400);
+        $('.overlay-notify').fadeToggle(400);
+        $('.Menu').fadeOut(400);
+        $('.overlay').fadeOut(400);
         $('.notification .confirm').attr('data-id', id);
     })
     $('.notification .confirm').click(function(){
@@ -88,25 +120,35 @@ $(document).ready(function(){
         ConfirmDeleteCard(id);
     });
     $('.notification .cancel').click(function(){
-        $('.notification').slideToggle(500);
-        $('.overlay-notify').fadeToggle(500);
+        $('.notification').slideToggle(400);
+        $('.overlay-notify').fadeToggle(400);
     });
     $('.overlay-notify').click(function(){
-        $('.notification').slideToggle(500);
-        $('.overlay-notify').fadeToggle(500);
+        $('.notification').slideToggle(400);
+        $('.overlay-notify').fadeToggle(400);
     });
 
     // open search
     $('#Search').click(function(e){
         e.preventDefault();
-        $('#SearchBar').fadeToggle(600);
-        $('.overlay-search').fadeToggle(600);
+        $('#SearchBar').fadeToggle(400);
+        $('.overlay-search').fadeToggle(400);
         $('#SearchBar input').select();
     });
     $('.overlay-search').click(function(){
-        $('#SearchBar').fadeToggle(600);
-        $('.overlay-search').fadeToggle(600);
-        $('#ResultsSearch').fadeOut(600);
+        $('#SearchBar').fadeToggle(400);
+        $('.overlay-search').fadeToggle(400);
+        $('#ResultsSearch').fadeOut(400);
+    });
+    $('.overlay').click(function(){
+        $('.Menu').fadeOut(400);
+        $('#BoxNotifications').fadeOut(400);
+    });
+    $('.option-menu .edit').click(function(){
+        let id = $(this).data('id');
+        let comment = $('#comment-'+id+' .txt').text();
+        $('#EditComment textarea').val(comment);
+        $('#EditComment textarea').select();
     });
     $('#SearchBar input').on('keyup', function() {
         let search = $(this).val();
@@ -116,7 +158,7 @@ $(document).ready(function(){
                 .then(data => {
 
                     $('#ResultsSearch').html('');
-                    $('#ResultsSearch').fadeIn(600);
+                    $('#ResultsSearch').fadeIn(400);
 
                     if (data.length > 0) {
                         data.forEach(function(item) {
@@ -146,7 +188,7 @@ $(document).ready(function(){
                 })
                 .catch(error => console.log('Erro:', error));
         } else {
-            $('#ResultsSearch').fadeOut(600);
+            $('#ResultsSearch').fadeOut(400);
             $('#ResultsSearch').html('');
         }
     });
@@ -175,15 +217,100 @@ $(document).ready(function(){
         $('.btn-loading button span').text('Salvando...');
     });
 
+    $('.newPost .send').click(function(){
+        $('.newPost .send span').text('Postando...');
+    });
+
+    $('.comment .btn-loading').click(function(){
+        $('.btn-loading button span').text('Publicando...');
+    });
+
     $('.imgPost .image').on('dblclick', function() {
         alert('Você clicou duas vezes na imagem!');
+    });
+    $('.opcional-posting button').click(function(){
+        $(this).toggleClass('active');
+    });
+    $('#schedule-button').click(function(){
+        $('input[name=schedule]').val('');
+        $('#tab-schedule').toggle(300);
+    });
+    $('#monetize-button').click(function(){
+        $('input[name=value]').val('');
+        $('#tab-monetize').toggle(300);
+    });
+    $('#announce-button').click(function(){
+        $('input[name=announce]').prop('checked', false);
+        $('#tab-announce').toggle(300);
+        $('#24h-button').fadeToggle(0);
+        $('input[name=24h]').val(0);
+    });
+    $('#nocomments-button').click(function(){
+        if($('input[name=nocomments]').val() == 1){
+            $('input[name=nocomments]').val(0);
+        } else {
+            $('input[name=nocomments]').val(1);
+        }
+    });
+    $('#24h-button').click(function(){
+        $('#announce-button').fadeToggle(0);
+        $('input[name=announce]').prop('checked', false);
+        if($('input[name=24h]').val() == 1){
+            $('input[name=24h]').val(0);
+        } else {
+            $('input[name=24h]').val(1);
+        }
+    });
+
+    $('.Notifications').click(function(e){
+        e.preventDefault();
+        $('#BoxNotifications').fadeIn(400);
+        $('.overlay').fadeIn(400);
     });
 
     $('#options').click(function(){
         $(".overlay").fadeIn().show();
         $("#options-menu").fadeIn(300).show();
         $('#options-menu').css('z-index', 99999);
-    })
+    });
+
+    $('.comments .options').click(function(){
+        let id = $(this).data('id');
+        $(".overlay").fadeIn().show();
+        $(".Menu[data-id="+id+"]").fadeIn(300).show();
+        $(".Menu[data-id="+id+"]").css('z-index', 99999);
+    });
+    $('.options-post').click(function(){
+        let id = $(this).data('id');
+        $(".overlay").fadeIn().show();
+        $(".menu-post[data-id="+id+"]").fadeIn(300).show();
+        $(".menu-post[data-id="+id+"]").css('z-index', 99999);
+    });
+    $('#EditComment .confirm').click(function(){
+        let id = $(this).data('id');
+        let comment = $('#EditComment textarea').val();
+        ConfirmEditComment(id, comment);
+    });
+    $('#DeletePost .confirm').click(function(){
+        let id = $(this).data('id');
+        let comment = $('#EditComment textarea').val();
+        ConfirmDeletePost(id);
+    });
+    $('#options-comment .delete').click(function(e){
+        e.preventDefault();
+        let id = $(this).data('id');
+        fetch(APP_URL+`/delete-comment/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    let comments = $('.button-comment span').text() - 1;
+                    $('.button-comment span').text(comments);
+                    $('#comment-'+id).fadeOut(400);
+                })
+                .catch(error => console.log('Erro:', error));
+    });
+    $('.Menu a').click(function(){
+        $('.overlay').fadeOut(400);
+    });
 
     $('#upload-photo').change(function(event){
         const file = event.target.files[0]; 

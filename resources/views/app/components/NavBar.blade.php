@@ -3,12 +3,18 @@
     <a href="{{ route('home') }}"><img class="logo" src="{{ URL::asset('app/images/logo.png') }}"/></a>
     <a href="#" id="Search" class="Search"><i class="fa-solid fa-magnifying-glass"></i></a>
     <a href="#" class="Messages"><i class="fa-regular fa-comment"></i><span>6</span></a>
+    <a href="#" class="Notifications"><i class="fa-regular fa-bell"></i>
+        @if($number > 0)
+        <span>{{ $number }}</span>
+        @endif
+    </a>
     <button class="mainMenu" onClick="openMenu();" type="button">
         <i class="fa-solid fa-bars"></i>
     </button>
     <div class="Menu">
         <a href="{{ route('following') }}"><i class="fa-regular fa-user"></i> Minhas assinaturas</a>
         <a href="{{ route('credit-cards') }}"><i class="fa-regular fa-credit-card"></i> Meus cartões</a>
+        <a href="{{ route('credit-cards') }}"><i class="fa-regular fa-image"></i> Fotos compradas</a>
         <a href="#"><i class="fa-regular fa-circle-play"></i> Seja Criador</a>
         <hr color="#4b4b4b"/>
         <a href="{{ route('configurations') }}"><i class="fa-solid fa-gear"></i> Configurações</a>
@@ -24,4 +30,17 @@
 </div>
 <div id="ResultsSearch">
     
+</div>
+
+<div id="BoxNotifications">
+    <h4>Notificações</h4>
+    @if($number == 0)
+    <div class="empty">Nenhuma notificação por aqui.</div>
+    @endif
+    @foreach($comments as $comment)
+    <a href="{{ route('post', ['id' => $comment->id]) }}" class="newNotification">
+        <span>Seu conteúdo tem <b> @if($comment->comments_count > 1) {{ $comment->comments_count }} novos</b> comentários. @else um novo</b> comentário. @endif</span>
+        <p>{{ $comment->description }}...</p>
+    </a>
+    @endforeach
 </div>

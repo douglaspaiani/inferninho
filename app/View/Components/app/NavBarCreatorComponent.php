@@ -1,7 +1,8 @@
 <?php
  
 namespace App\View\Components\app;
- 
+
+use App\Models\User;
 use Illuminate\View\Component;
 use Illuminate\View\View;
  
@@ -12,6 +13,12 @@ class NavBarCreatorComponent extends Component
  
     public function render(): View
     {
-        return view('app.components.NavBarCreator');
+        $user = new User;
+        if($user->VerifyCreator()){
+            return view('app.components.NavBarCreator');
+        } else {
+            return view('app.components.blank');
+        }
+        
     }
 }

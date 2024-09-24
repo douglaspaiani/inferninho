@@ -50,6 +50,10 @@
     </div>
     <div class="UserPosts">
 
+        @if(count($posts) == 0)
+            <div style="margin-bottom:100px" class="empty">Nenhum conteúdo publicado por enquanto.</div>
+        @endif
+
         @if($subscriber == false)
 
         <div class="sign">
@@ -63,9 +67,12 @@
 
         @else
 
+        @if(count($posts) > 0)
         <div class="buttons">
-            <a href="#"><i class="fa-solid fa-grip"></i> Visualizar em grade</a>
+            <a href="{{ route('username_grid', ['username' => str_replace('@', '', $user->username)]) }}"><i class="fa-solid fa-grip"></i> Visualizar em grade</a>
         </div>
+        @endif
+
         @foreach ($posts as $post)
             <x-post-component
                 name="{{ $user->name }}"
@@ -77,7 +84,9 @@
                 id="{{ $post->id }}"
                 top="{{ $user->top }}"
                 verify="{{ $user->verify }}"
-                date="{{ $post->created_at }}"
+                date="{{ $post->schedule }}"
+                nocomments="{{ $post->nocomments }}"
+                value="{{ $post->value }}"
             />
         @endforeach
 

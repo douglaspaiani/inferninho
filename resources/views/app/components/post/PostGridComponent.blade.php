@@ -1,0 +1,1 @@
+<a href="{{ route('post', ['id' => $id]) }}" class="item" style="background-image:url({{ $image_post }})"></a>

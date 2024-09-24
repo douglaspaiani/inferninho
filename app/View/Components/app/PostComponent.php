@@ -2,7 +2,11 @@
  
 namespace App\View\Components\app;
 
+use App\Models\Comments;
+use App\Models\Posts;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 use Illuminate\View\Component;
 use Illuminate\View\View;
@@ -22,6 +26,8 @@ class PostComponent extends Component
         public int $top,
         public int $verify,
         public string $date,
+        public int $nocomments,
+        public float $value,
     ) {}
  
     public function render(): View
@@ -52,6 +58,22 @@ class PostComponent extends Component
         $date = Carbon::parse($this->date);
         $this->date = $date->diffForHumans();
 
-        return view('app.components.home.PostComponent', ['images' => $images, 'photo_url' => $photoUrl]);
+        // comments
+        $comment = new Comments;
+        $countComments = $comment->countComments($this->id);
+
+        if(Route::currentRouteName() == 'post'){
+            $comments = $comment->getCommentsByPost($this->id);
+        }
+
+        $post = new Posts;
+        $user_id = $post->getIdUserByPost($this->id);
+
+        // desactive notifications
+        if(Route::currentRouteName() == 'post' && $user_id == Auth::id()){
+            $comment->ReadComments($this->id);
+        }
+
+        return view('app.components.post.PostComponent', ['images' => $images, 'photo_url' => $photoUrl, 'comments' => $comments ?? null, 'countComments' => $countComments, 'user_id' => $user_id]);
     }
 }

@@ -3,11 +3,22 @@
 namespace App\Repositories;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserRepository {
 
     public function Register(array $data){
         return User::create($data);
+    }
+
+    public function VerifyCreator():bool
+    {
+        $user = User::where('id', Auth::id())->get(['creator'])->first();
+        if($user->creator == 1){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function find(int $id){
