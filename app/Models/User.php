@@ -92,6 +92,19 @@ class User extends Authenticatable
         ];
     }
 
+    public function getUserById(int $id){
+        $user = $this->UserRepository->find($id);
+        $user['link'] = env('APP_URL').'/'.$user['username'];
+        if(empty($user['photo'])){
+            $user['photo'] = URL::asset('app/images/user-default.jpg');
+        } else {
+            $user['photo'] = env('PROFILE_IMG').$user['photo'];
+        }
+        $user['user'] = $user['username'];
+        $user['username'] = '@'.$user['username'];
+        return $user;
+    }
+
     public function getUser(){
         $user = $this->UserRepository->find(Auth::id());
         $user['link'] = env('APP_URL').'/'.$user['username'];
@@ -103,6 +116,10 @@ class User extends Authenticatable
         $user['user'] = $user['username'];
         $user['username'] = '@'.$user['username'];
         return $user;
+    }
+
+    public function getIdByUsername(string $username){
+        return $this->UserRepository->getIdByUsername($username);
     }
 
     public function getUserByUsername(string $username){

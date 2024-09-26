@@ -51,4 +51,9 @@ class UserRepository {
             return false;
         }
     }
+
+    public function getIdByUsername(string $username){
+        $user = User::where('username', $username)->get(['id'])->first();
+        return $user['id'];
+    }
 }
