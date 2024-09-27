@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
+    public function MessagesPage(){
+        $message = new Message();
+        $messages = $message->ListMessageUsers();
+        return view('app.messages', ['view' => $messages['view'], 'notview' => $messages['notview']]);
+    }
+
     public function ChatPage($username)
     {
         $chat = new Message;
@@ -21,7 +27,7 @@ class ChatController extends Controller
         }
 
         // verify auth chat
-        if($chat->VerifyAuthChat($datauser['id'])){
+        if(!$chat->VerifyAuthChat($datauser['id'])){
             return redirect()->route('messages');
         }
 
@@ -33,7 +39,9 @@ class ChatController extends Controller
                   ->where('sender', Auth::id());
         })->get();
 
-        return view('app.chat', ['messages' => $messages, 'username' => $username, 'user' => $datauser]);
+        $chat->MarkRead($datauser['id']);
+
+        return view('app.chat', ['messages' => $messages, 'username' => $username, 'user' => $datauser, 'error' => $error ?? null]);
     }
 
     public function store(string $username, Request $request)
@@ -65,13 +73,9 @@ class ChatController extends Controller
             $datauser = $user->getUserByUsername($username);
         }
         
-        $messages = Message::where(function($query) use ($datauser) {
-            $query->where('received', Auth::id())
-                  ->where('sender', $datauser['id']);
-        })->orWhere(function($query) use ($datauser) {
-            $query->where('received', $datauser['id'])
-                  ->where('sender', Auth::id());
-        })->where('view', 0);
+        $messages = Message::where('received', Auth::id())
+        ->where('sender', $datauser['id'])
+        ->where('view', 0);
 
         $return = $messages->get();
 

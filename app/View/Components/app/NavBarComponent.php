@@ -16,6 +16,7 @@ class NavBarComponent extends Component
     {
         $notifications = new Notifications;
         $comments = $notifications->CommentsNotifications();
+        $messages = $notifications->MessagesNotifications();
         $number = count($comments);
 
         // remove notification comments
@@ -28,6 +29,6 @@ class NavBarComponent extends Component
             }
         }
         
-        return view('app.components.NavBar', ['comments' => $comments, 'number' => $number]);
+        return view('app.components.NavBar', ['comments' => $comments, 'number' => $number, 'messages' => $messages]);
     }
 }

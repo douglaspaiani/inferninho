@@ -101,35 +101,8 @@ function ConfirmDeleteCard(id){
             successNotify('Cartão de crédito removido com sucesso!');
         });
 }
-function AddMessage(message){
-    $('#chat-box').animate({
-        scrollTop: $(this).height()
-      }, 100);
-    $('#chat-box').append(`<div class="line my-line"><div class="message me"><p>${message}</p></div></div>`);
-}
 
 $(document).ready(function(){
-    // CHAT 
-    // Send a message
-    $('#chat-form').submit(function(e) {
-        e.preventDefault();
-        let url = $(location).attr('href');
-        let message = $('#message-input').val();
-
-        $.ajax({
-            url: url,
-            method: "POST",
-            data: {
-                _token: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                message: message
-            },
-            success: function(response) {
-                $('#message-input').val('');
-                AddMessage(message);
-            }
-        });
-    });
-
     // open notification
     $('.openNotify').click(function(e){
         e.preventDefault();

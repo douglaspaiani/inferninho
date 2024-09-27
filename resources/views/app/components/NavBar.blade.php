@@ -2,7 +2,11 @@
     <span class="overlay" onClick="closeMenu();"></span>
     <a href="{{ route('home') }}"><img class="logo" src="{{ URL::asset('app/images/logo.png') }}"/></a>
     <a href="#" id="Search" class="Search"><i class="fa-solid fa-magnifying-glass"></i></a>
-    <a href="#" class="Messages"><i class="fa-regular fa-comment"></i><span>6</span></a>
+    <a href="{{ route('messages') }}" class="Messages"><i class="fa-regular fa-comment"></i>
+        @if($messages > 0)
+        <span>{{ $messages }}</span>
+        @endif
+    </a>
     <a href="#" class="Notifications"><i class="fa-regular fa-bell"></i>
         @if($number > 0)
         <span>{{ $number }}</span>

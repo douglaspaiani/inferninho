@@ -16,9 +16,9 @@
         <div class="description">{{ $user->description }}</div>
         <button type="button" id="options"><i class="fa-solid fa-ellipsis-vertical"></i></button>
         <div id="options-menu" class="Menu">
-            <a href="#"><i class="fa-solid fa-share"></i> Compartilhar</a>
+            <a href="#" class="share"><i class="fa-solid fa-share"></i> Compartilhar</a>
             @if($subscriber == true)
-            <a href="#"><i class="fa-solid fa-ban"></i> Cancelar assinatura</a>
+            <a href="{{ route('chat', ['username' => str_replace('@', '', $user->username)]) }}"><i class="fa-regular fa-comment"></i> Enviar mensagem</a>
             <a href="#"><i class="fa-solid fa-triangle-exclamation"></i> Denunciar perfil</a>
             @endif
         </div>
@@ -96,6 +96,22 @@
         @endif
     </div>
 </div>
+
+<script>
+const shareData = {
+  title: "{{ $user->name }} - Inferninho",
+  text: "Assine o conteúdo privado e exclusivo de {{ $user->name }} no Inferninho.",
+  url: "{{ route('username', ['username' => str_replace('@', '', $user->username)]) }}",
+};
+const btn = document.querySelector(".share");
+btn.addEventListener("click", async () => {
+  try {
+    await navigator.share(shareData);
+  } catch (err) {
+    alert("Error: " + e);
+  }
+});
+</script>
 
 <x-navbar-creator-component/>
 @include('app.inc.footer')

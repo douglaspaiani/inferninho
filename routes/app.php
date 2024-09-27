@@ -43,6 +43,7 @@ Route::middleware('auth')->prefix('app')->group(function () {
     // Search
     Route::get('/search/{search}', [\App\Http\Controllers\UserController::class, 'SearchPost'])->name('search');
     // Chat
+    Route::get('/messages', [\App\Http\Controllers\ChatController::class, 'MessagesPage'])->name('messages');
     Route::get('/chat/{username}', [\App\Http\Controllers\ChatController::class, 'ChatPage'])->name('chat');
     Route::post('/chat/{username}', [\App\Http\Controllers\ChatController::class, 'store'])->name('chat.store');
     Route::get('/chat/{username}/update', [\App\Http\Controllers\ChatController::class, 'Update'])->name('chat.update');

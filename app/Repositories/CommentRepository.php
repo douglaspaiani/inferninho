@@ -41,7 +41,7 @@ class CommentRepository {
         return Comments::where('post', $id)->count();
     }
 
-    public function Notifications(){
+    public function CommentsNotifications(){
         $posts = Posts::select('posts.description', 'posts.id', DB::raw('SUBSTRING(posts.description, 1, 20) as description'))
         ->withCount(['comments' => function ($query) {
             $query->whereColumn('posts.id', 'comments.post')
