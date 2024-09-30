@@ -83,8 +83,10 @@ class PostRepository {
         ->join('users', 'posts.user', '=', 'users.id')
         ->where('posts.schedule', '<=', Carbon::now()->format('Y-m-d H:i:s'))
         ->where('posts.due_date', '>=', Carbon::now()->format('Y-m-d H:i:s'))
+        ->where('users.ban', 0)
         ->whereIn('posts.user', $users)
         ->orWhere('posts.public', 1)
+        ->where('users.ban', 0)
         ->select('posts.*', 'users.name', 'users.photo', 'users.username', 'users.verify', 'users.top', 'users.price_1', 'posts.timer')
         ->orderBy('posts.id', 'desc')
         ->get();

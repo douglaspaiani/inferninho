@@ -3,6 +3,16 @@
 <x-navbar-component/>
 
 <div class="container page">
+    @if($user->ban == 1)
+    <div class="banned">
+        <i class="fa-solid fa-ban"></i>
+        <h4>Este usuário foi banido!</h4>
+        <div class="inferninho">
+            <p>Powered by</p>
+            <a href="{{ env('APP_URL') }}"><img alt='Inferninho' title="Inferninho" src="{{ URL::asset('app/images/logo.png') }}"/></a>
+        </div>
+    </div>
+    @else
 <a href="{{ url()->previous() }}" class="Back"><i class="fa-solid fa-chevron-left"></i> Voltar</a>
 <div class="Post noAfter">
 <div class="UserLine">
@@ -40,6 +50,7 @@
         @endforeach
     </div>
 </div>
+@endif
 </div>
 <x-navbar-creator-component/>
 @include('app.inc.footer')

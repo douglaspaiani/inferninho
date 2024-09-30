@@ -25,9 +25,18 @@ class UserRepository {
         return User::find($id);
     }
 
+    public function Ban(int $id){
+        return User::where('id', $id)->update(['ban'=>1]);
+    }
+
+    public function Unban(int $id){
+        return User::where('id', $id)->update(['ban'=>0]);
+    }
+
     public function search(string $name){
         return User::where('name', 'LIKE', "%{$name}%")
         ->where('creator', 1)
+        ->where('ban', 0)
         ->orWhere('username', 'LIKE', "%{$name}%")
         ->limit(6)
         ->orderBy('verify', 'desc')
@@ -55,5 +64,9 @@ class UserRepository {
     public function getIdByUsername(string $username){
         $user = User::where('username', $username)->get(['id'])->first();
         return $user['id'];
+    }
+
+    public function getBanned(){
+        return User::where('ban', 1)->get();
     }
 }

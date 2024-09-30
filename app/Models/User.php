@@ -13,6 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\URL;
 
 class User extends Authenticatable
@@ -66,7 +67,8 @@ class User extends Authenticatable
         'neighborhood',
         'city',
         'state',
-        'email_verified_at'
+        'email_verified_at',
+        'ban'
     ];
 
     /**
@@ -156,7 +158,7 @@ class User extends Authenticatable
 
     }
 
-    public function UpdateProfile(Request $request){
+    public function UpdateProfile(Request $request, int $id = null){
         $request->validate([
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
@@ -172,17 +174,24 @@ class User extends Authenticatable
 
         // mount data
         $data = [
-            'id' => Auth::id(),
+            'id' => $id ?? Auth::id(),
             'username' => $user['username'] ?? null,
             'name' => $user['name'],
+            'cpf' => $user['cpf'] ?? null,
             'description' => $user['description'] ?? null,
             'tiktok' => $user['tiktok'] ?? null,
             'instagram' => $user['instagram'] ?? null,
             'facebook' => $user['facebook'] ?? null,
             'twitter' => $user['twitter'] ?? null,
             'telegram' => $user['telegram'] ?? null,
-            'site' => $user['site'] ?? null
+            'site' => $user['site'] ?? null,
+            'top' => isset($user['top']) == 1 ? 1 : 0,
+            'verify' => isset($user['verify']) == 1 ? 1 : 0,
         ];
+
+        if(!empty($user['password'])){
+            $data['password'] = Hash::make($user['password']);
+        }
 
         // verify and upload photo
         if($request->hasFile('photo')){
@@ -234,6 +243,18 @@ class User extends Authenticatable
 
     public function VerifyCreator(){
         return $this->UserRepository->VerifyCreator();
+    }
+
+    public function getBanned(){
+        return $this->UserRepository->getBanned();
+    }
+
+    public function Ban(int $id){
+        return $this->UserRepository->Ban($id);
+    }
+
+    public function Unban(int $id){
+        return $this->UserRepository->Unban($id);
     }
 
 }

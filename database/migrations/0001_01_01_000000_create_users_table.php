@@ -46,6 +46,7 @@ return new class extends Migration
             $table->string('state')->nullable();
             $table->integer('hidden_name')->default(0);
             $table->integer('timer')->default(0);
+            $table->integer('ban')->default(0);
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

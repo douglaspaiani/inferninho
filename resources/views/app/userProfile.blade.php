@@ -2,6 +2,16 @@
 
 <x-navbar-component/>
 <div class="container pageProfile">
+    @if($user->ban == 1)
+    <div class="banned">
+        <i class="fa-solid fa-ban"></i>
+        <h4>Este usuário foi banido!</h4>
+        <div class="inferninho">
+            <p>Powered by</p>
+            <a href="{{ env('APP_URL') }}"><img alt='Inferninho' title="Inferninho" src="{{ URL::asset('app/images/logo.png') }}"/></a>
+        </div>
+    </div>
+    @else
     <div class="userPanel">
         <span class="photo" style="background-image:url('{{ $user->photo }}')"></span>
         <h1 class="name">{{ $user->name }}
@@ -95,6 +105,7 @@
 
         @endif
     </div>
+    @endif
 </div>
 
 <script>

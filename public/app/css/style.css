@@ -1880,3 +1880,25 @@ box-shadow: 0px 3px 38px 8px rgba(0,0,0,0.75);
 .messages .item h4 {
   color: #fff;
 }
+.banned {
+  text-align: center;
+  color: #aaa;
+  margin-top: 100px;
+}
+.banned i {
+  font-size: 50px;
+}
+.banned .inferninho {
+  margin-top: 100px;
+}
+.inferninho {
+  text-align: center;
+  margin-top: 60px;
+}
+.inferninho p {
+  font-size: 11px;
+  text-transform: uppercase;
+}
+.inferninho img {
+  height: 20px;
+}
