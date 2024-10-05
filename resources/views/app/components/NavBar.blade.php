@@ -23,7 +23,7 @@
         <hr color="#4b4b4b"/>
         <a href="{{ route('configurations') }}"><i class="fa-solid fa-gear"></i> Configurações</a>
         <a href="#"><i class="fa-solid fa-shield-halved"></i> Segurança e privacidade</a>
-        <a href="#"><i class="fa-solid fa-circle-question"></i> Ajuda</a>
+        <a href="{{ route('support') }}"><i class="fa-solid fa-circle-question"></i> Ajuda & Suporte</a>
         <hr color="#4b4b4b"/>
         <a href="{{ route('logout') }}"><i class="fa-solid fa-arrow-right-from-bracket"></i> Sair da conta</a>
     </div>
@@ -41,10 +41,18 @@
     @if($number == 0)
     <div class="empty">Nenhuma notificação por aqui.</div>
     @endif
+
     @foreach($comments as $comment)
     <a href="{{ route('post', ['id' => $comment->id]) }}" class="newNotification">
         <span>Seu conteúdo tem <b> @if($comment->comments_count > 1) {{ $comment->comments_count }} novos</b> comentários. @else um novo</b> comentário. @endif</span>
         <p>{{ $comment->description }}...</p>
+    </a>
+    @endforeach
+
+    @foreach($support as $sup)
+    <a href="{{ route('read-support', ['id' => $sup->id]) }}" class="newNotification">
+        <span>Seu chamado de suporte recebeu uma nova resposta do suporte!</span>
+        <p>Confira e responda o seu chamado.</p>
     </a>
     @endforeach
 </div>

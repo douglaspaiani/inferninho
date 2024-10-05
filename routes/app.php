@@ -47,11 +47,18 @@ Route::middleware('auth')->prefix('app')->group(function () {
     Route::get('/chat/{username}', [\App\Http\Controllers\ChatController::class, 'ChatPage'])->name('chat');
     Route::post('/chat/{username}', [\App\Http\Controllers\ChatController::class, 'store'])->name('chat.store');
     Route::get('/chat/{username}/update', [\App\Http\Controllers\ChatController::class, 'Update'])->name('chat.update');
+    // Support
+    Route::get('/support', [\App\Http\Controllers\SupportController::class, 'SupportPage'])->name('support');
+    Route::get('/open-support', [\App\Http\Controllers\SupportController::class, 'AddSupport'])->name('open-support');
+    Route::post('/open-support', [\App\Http\Controllers\SupportController::class, 'AddSupportPost'])->name('open-support');
+    Route::get('/support/{id}', [\App\Http\Controllers\SupportController::class, 'ReadSupport'])->name('read-support');
+    Route::post('/support/{id}', [\App\Http\Controllers\SupportController::class, 'AddResponseSupport'])->name('read-support');
+    Route::get('/close-support/{id}', [\App\Http\Controllers\ChatController::class, 'MessagesPage'])->name('close-support');
 });
 
 // User Profile
+Route::get('/{username}', [\App\Http\Controllers\UserController::class, 'UserProfilePage'])->name('username');
 Route::middleware('auth')->group(function () {
-    Route::get('/{username}', [\App\Http\Controllers\UserController::class, 'UserProfilePage'])->name('username');
     Route::get('/{username}/grid', [\App\Http\Controllers\UserController::class, 'UserProfilePageGrid'])->name('username_grid');
     Route::get('/{username}/checkout', [\App\Http\Controllers\SubscriptionsController::class, 'CheckoutPage'])->name('checkout');
     Route::post('/{username}/checkout', [\App\Http\Controllers\SubscriptionsController::class, 'CheckoutPage'])->name('checkout');

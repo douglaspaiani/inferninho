@@ -225,6 +225,10 @@ class User extends Authenticatable
     public function UpdateSignature(Request $request){
         $user = $request->all();
 
+        if($user['price_1'] < env('MIN_SIGNATURE') || $user['price_3'] < env('MIN_SIGNATURE') || $user['price_6'] < env('MIN_SIGNATURE')){
+            throw new Exception('Valor mínimo da assinatura é R$ '.env('MIN_SIGNATURE').'.');
+        }
+
         // mount data
         $data = [
             'id' => Auth::id(),

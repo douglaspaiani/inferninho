@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Support;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -20,6 +21,7 @@ class AdminController extends Controller
         $credentials = $request->only('user', 'password');
 
         if (Auth::guard('admin')->attempt($credentials)) {
+            session(['admin' => true]);
             return redirect()->intended(route('admin.dashboard'));
         }
 
@@ -29,11 +31,19 @@ class AdminController extends Controller
     public function Logout()
     {
         Auth::guard('admin')->logout();
+        session(['admin' => false]);
         return redirect()->route('admin.login');
     }
 
     public function Dashboard(){
-        return view('admin.dashboard');
+        $admin = new Admin;
+        $support = new Support;
+        $creators = $admin->CountAllCreators();
+        $subscribers = $admin->CountAllSubscribers();
+        $subscriptions = $admin->CountAllSubscriptions();
+        $views = $admin->CountAllViews();
+        $supports = $support->ListAllSupport();
+        return view('admin.dashboard', ['subscribers' => $subscribers, 'creators' => $creators, 'subscriptions' => $subscriptions, 'views' => $views, 'supports' => $supports]);
     }
 
     public function Creators(){
@@ -105,5 +115,38 @@ class AdminController extends Controller
         $user = new User;
         $user->Unban($id);
         return redirect()->route('admin.banned')->with(['success' => 'Usuário foi desbanido com sucesso do sistema!']);
+    }
+
+    public function SupportPage(){
+        $support = new Support;
+        return view('admin.support.support', ['supports' => $support->ListSupport(), 'closeds' => $support->ListSupportClosedAdmin()]);
+    }
+
+    public function SupportClosedPage(){
+        $support = new Support;
+        return view('admin.support.supportClosed', ['supports' => $support->ListSupportClosedAdmin()]);
+    }
+
+    public function ReadSupport(int $id){
+        $support = new Support;
+        $sup = $support->GetSupport($id);
+        return view('admin.support.readSupport', ['support' => $sup['support'], 'messages' => $support->GetMessagesSupport($id), 'photo' => $sup['photo'], 'name' => $sup['name'], 'email' => $sup['email'], 'username' => $sup['username']]);
+    }
+
+    public function AddResponseSupport(int $id, Request $request){
+        $support = new Support;
+        try {
+            $support->ResponseSupportAdmin($id, $request);
+        } catch (Exception $e){
+            return redirect()->route('admin.support')->withErrors(['error' => $e->getMessage()]);
+        }
+        
+        return redirect()->route('admin.support')->with(['success' => 'Resposta enviada com sucesso!']);
+    }
+
+    public function CloseSupport(int $id){
+        $support = new Support;
+        $support->CloseSupport($id);
+        return redirect()->route('admin.support')->with(['success' => 'Chamado fechado com sucesso!']);
     }
 }

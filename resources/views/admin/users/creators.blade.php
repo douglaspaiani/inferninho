@@ -39,7 +39,7 @@
                     <td>
                       <span class="text-muted">{{ \Carbon\Carbon::parse($user->created_at)->format('d/m/Y') }}</span>
                     </td>
-                    <td>
+                    <td class="text-center">
                         <div class="btn-group me-2 mb-2" role="group" aria-label="Icons File group">
                             <a href="{{ route('admin.edit-creator', ['id' => $user->id]) }}" class="btn btn-sm btn-primary">
                               <i class="fa fa-fw fa-edit"></i>

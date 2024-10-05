@@ -33,4 +33,20 @@ class Admin extends Authenticatable
     public function CountSubscribers(int $id){
         return $this->AdminRepository->CountSubscribers($id);
     }
+
+    public function CountAllSubscribers(){
+        return $this->AdminRepository->CountAllSubscribers();
+    }
+
+    public function CountAllCreators(){
+        return $this->AdminRepository->CountAllCreators();
+    }
+
+    public function CountAllSubscriptions(){
+        return $this->AdminRepository->CountAllSubscriptions();
+    }
+
+    public function CountAllViews(){
+        return $this->AdminRepository->CountAllViews();
+    }
 }

@@ -69,4 +69,5 @@ class UserRepository {
     public function getBanned(){
         return User::where('ban', 1)->get();
     }
+
 }

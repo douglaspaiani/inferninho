@@ -33,7 +33,7 @@
             {{ $description }}
         </div>
         @endif
-        @if($value > 0 && $sold == 0)
+        @if($value > 0 && $sold == 0 && session('admin') != true)
         <div class="imgpost">
             <div class="buy">
                 <i class="fa-regular fa-eye-slash"></i>

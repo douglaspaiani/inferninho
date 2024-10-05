@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Posts;
 use App\Models\Subscriptions;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -28,6 +29,22 @@ class AdminRepository {
 
     public function CountSubscribers(int $id){
         return Subscriptions::where('user', $id)->where('status', 1)->count();
+    }
+
+    public function CountAllSubscribers(){
+        return User::where('creator', 0)->where('ban', 0)->count();
+    }
+
+    public function CountAllCreators(){
+        return User::where('creator', 1)->where('ban', 0)->count();
+    }
+
+    public function CountAllSubscriptions(){
+        return Subscriptions::where('status', 1)->count();
+    }
+
+    public function CountAllViews(){
+        return Posts::sum('views');
     }
 
 }

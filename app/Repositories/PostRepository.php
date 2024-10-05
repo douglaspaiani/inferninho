@@ -40,7 +40,9 @@ class PostRepository {
 
     public function getPostsByUsername(string $username){
         $id = User::where('username', $username)->first();
-        return Posts::where('user', $id->id)->where('public', 0)->orderBy('id', 'desc')->get();
+        $posts = Posts::where('user', $id->id)->where('public', 0)->orderBy('id', 'desc');
+        $posts->increment('views');
+        return $posts->get();
     }
 
     public function setPost(array $data){

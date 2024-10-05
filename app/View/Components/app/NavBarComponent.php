@@ -17,7 +17,8 @@ class NavBarComponent extends Component
         $notifications = new Notifications;
         $comments = $notifications->CommentsNotifications();
         $messages = $notifications->MessagesNotifications();
-        $number = count($comments);
+        $support = $notifications->SupportNotifications();
+        $number = count($comments) + count($support);
 
         // remove notification comments
         if(Route::currentRouteName() == 'post'){
@@ -29,6 +30,6 @@ class NavBarComponent extends Component
             }
         }
         
-        return view('app.components.NavBar', ['comments' => $comments, 'number' => $number, 'messages' => $messages]);
+        return view('app.components.NavBar', ['comments' => $comments, 'number' => $number, 'messages' => $messages, 'support' => $support]);
     }
 }

@@ -21,6 +21,12 @@ Route::middleware('auth:admin')->prefix('admin')->group(function () {
     Route::get('/subscribers', [\App\Http\Controllers\AdminController::class, 'Subscribers'])->name('admin.subscribers');
     Route::get('/edit-subscriber/{id}', [\App\Http\Controllers\AdminController::class, 'EditSubscriber'])->name('admin.edit-subscriber');
     Route::post('/edit-subscriber/{id}', [\App\Http\Controllers\AdminController::class, 'EditSubscriberPost'])->name('admin.edit-subscriber');
+    // Support
+    Route::get('/support', [\App\Http\Controllers\AdminController::class, 'SupportPage'])->name('admin.support');
+    Route::get('/support-closed', [\App\Http\Controllers\AdminController::class, 'SupportClosedPage'])->name('admin.support-closed');
+    Route::get('/support/{id}', [\App\Http\Controllers\AdminController::class, 'ReadSupport'])->name('admin.read-support');
+    Route::post('/support/{id}', [\App\Http\Controllers\AdminController::class, 'AddResponseSupport'])->name('admin.read-support');
+    Route::get('/close-support/{id}', [\App\Http\Controllers\AdminController::class, 'CloseSupport'])->name('admin.close-support');
     // Logout
     Route::get('/logout', [\App\Http\Controllers\AdminController::class, 'Logout'])->name('admin.logout');
 });

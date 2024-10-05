@@ -1,6 +1,9 @@
 @include('app.inc.header')
-
+@if(Auth::id())
 <x-navbar-component/>
+@else
+<x-navbar-nologging-component/>
+@endif
 <div class="container pageProfile">
     @if($user->ban == 1)
     <div class="banned">
@@ -8,7 +11,7 @@
         <h4>Este usuário foi banido!</h4>
         <div class="inferninho">
             <p>Powered by</p>
-            <a href="{{ env('APP_URL') }}"><img alt='Inferninho' title="Inferninho" src="{{ URL::asset('app/images/logo.png') }}"/></a>
+            <a href="{{ route('login') }}"><img alt='Inferninho' title="Inferninho" src="{{ URL::asset('app/images/logo.png') }}"/></a>
         </div>
     </div>
     @else
@@ -64,7 +67,7 @@
             <div style="margin-bottom:100px" class="empty">Nenhum conteúdo publicado por enquanto.</div>
         @endif
 
-        @if($subscriber == false)
+        @if($subscriber == false && session('admin') != true)
 
         <div class="sign">
             <div class="boxSign boxContent">
@@ -123,6 +126,12 @@ btn.addEventListener("click", async () => {
   }
 });
 </script>
-
+@if(Auth::id())
 <x-navbar-creator-component/>
+@else
+<div class="inferninho">
+    <p>Powered by</p>
+    <a href="{{ route('login') }}"><img alt='Inferninho' title="Inferninho" src="{{ URL::asset('app/images/logo.png') }}"/></a>
+</div>
+@endif
 @include('app.inc.footer')

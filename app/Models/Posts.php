@@ -27,7 +27,8 @@ class Posts extends Model
         'private',
         'due_date',
         'public',
-        'timer'
+        'timer',
+        'views'
     ];
 
     protected $PostRepository;
@@ -72,6 +73,10 @@ class Posts extends Model
         if($request->get('announce') > 0){
             $due_date = Carbon::now()->addDays((int)$request->get('announce'));
             $public = 1;
+        }
+
+        if(!empty($request->get('value')) && ConvertRealToFloat($request->get('value')) < env('MIN_PHOTO_PRIVATE')){
+            throw new Exception('O valor mínimo da foto é de R$ '.env('MIN_PHOTO_PRIVATE').'.');
         }
 
         // mout data

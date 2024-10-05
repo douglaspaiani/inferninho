@@ -13,7 +13,6 @@
   </div>
     <script src="{{ URL::asset('admin/assets/js/dashmix.app.min.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/lib/jquery.min.js') }}"></script>
-    <script src="{{ URL::asset('admin/assets/js/dashmix.app.min.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/plugins/chart.js/chart.umd.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/pages/be_pages_dashboard.min.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/plugins/datatables/dataTables.min.js') }}"></script>
