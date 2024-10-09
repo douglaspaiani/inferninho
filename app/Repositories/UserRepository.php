@@ -11,6 +11,10 @@ class UserRepository {
         return User::create($data);
     }
 
+    public function UpdateUser(array $data){
+        return User::find(Auth::id())->update($data);
+    }
+
     public function VerifyCreator():bool
     {
         $user = User::where('id', Auth::id())->get(['creator'])->first();

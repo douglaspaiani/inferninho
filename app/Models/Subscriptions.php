@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use App\Repositories\SubscriptionsRepository;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Subscriptions extends Model
 {
@@ -19,7 +21,8 @@ class Subscriptions extends Model
         'due_date',
         'price',
         'method',
-        'final_card'
+        'final_card',
+        'pay'
     ];
 
     protected $SubscriptionsRepository;
@@ -53,5 +56,42 @@ class Subscriptions extends Model
 
     public function getUsersSubscriptionsExpired(){
         return $this->SubscriptionsRepository->getUsersSubscriptionsExpired();
+    }
+
+    public function VerifyExistsSubscription(int $id){
+        return $this->SubscriptionsRepository->VerifyExistsSubscription($id);
+    }
+
+    public function NewSubscription(int $id_creator, int $plan, string $method, string $pay = null){
+        $price = $this->getValue($id_creator, $plan);
+        
+        $data = [
+            'user' => $id_creator,
+            'subscriber' => Auth::id(),
+            'plan' => $plan,
+            'status' => 0,
+            'renew' => 0,
+            'due_date' => Carbon::now()->addMonths($plan),
+            'method' => $method,
+            'pay' => $pay ?? null,
+            'price' => $price
+        ];
+
+        $verify = $this->VerifyExistsSubscription($id_creator);
+        if($verify){
+            $this->UpdateSubscription($verify->id, $data);
+            return $this->VerifyExistsSubscription($id_creator);
+        }
+    
+        return $this->SubscriptionsRepository->insert($data);
+    }
+
+    public function UpdateSubscription(int $id, array $data){
+        return $this->SubscriptionsRepository->UpdateSubscription($id, $data);
+    }
+
+    public function getValue(int $id, string $plan, string $coupon = null){
+        $value = $this->SubscriptionsRepository->getValue($id, 'price_'.$plan);
+        return $value;
     }
 }

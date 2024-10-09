@@ -196,6 +196,7 @@ $(document).ready(function(){
 
     $('.cpf').mask('000.000.000-00', {reverse: true});
     $('.date').mask('00/00/0000');
+    $('.phone').mask('(00) 00000-0000');
     $('.card').mask('0000 0000 0000 0000');
     $('.valid').mask('00/00');
     $('.code').mask('000');
@@ -311,6 +312,88 @@ $(document).ready(function(){
     });
     $('.Menu a').click(function(){
         $('.overlay').fadeOut(400);
+    });
+    $('#btn-pix').click(function(){
+        $('.subscribe .payment button').css('background-color', '#4b4b4b');
+        $(this).css('background-color', '#CE5656');
+        $('#method-pix').fadeIn(200);
+        $('#method-card').fadeOut(200);
+    });
+    $('input[name="plan"]').click(function(){
+        $('.value-card').text($('label[for='+$('input[name="plan"]:checked').attr('id')+'] b').text());
+    });
+    $('#btn-card').click(function(){
+        $('.subscribe .payment button').css('background-color', '#4b4b4b');
+        $('.value-card').text($('label[for='+$('input[name="plan"]:checked').attr('id')+'] b').text());
+        $(this).css('background-color', '#CE5656');
+        $('#method-pix').fadeOut(200);
+        $('#method-card').fadeIn(200);
+    });
+    $('#PaymentPix').click(function(){
+        $('.error').fadeOut(100);
+        $('input[name="plan"]').attr('disabled', true);
+        $('#PaymentPix span').text('Gerando PIX de pagamento...');
+        let username = $('input[name="username"]').val();
+        fetch(BASE_URL+`${username}/payment-subscription`, {
+            method: 'POST',
+            body: JSON.stringify({
+                'method': 'PIX',
+                'plan': $('input[name="plan"]:checked').val()
+            }),
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.error){
+                    $('#payment-error').fadeIn(100);
+                    $('#payment-error').text(data.error);
+                } else {
+                    $('.qrcode').attr('src', 'data:image/png;base64,'+data.qrcode);
+                    $('.codepix').val(data.payload);
+                    $('.value').text(data.value);
+                    $(this).fadeOut(100);
+                    $('.return-pix').fadeIn(200);
+                }
+
+            });
+    });
+    $('#PaymentCard').click(function(){
+        $('.error').fadeOut(100);
+        $('input[name="plan"]').attr('disabled', true);
+        $('#PaymentCard span').text('Finalizando pagamento...');
+        let username = $('input[name="username"]').val();
+        fetch(BASE_URL+`${username}/payment-subscription`, {
+            method: 'POST',
+            body: JSON.stringify({
+                'method': 'CREDIT_CARD',
+                'plan': $('input[name="plan"]:checked').val(),
+                'card': $('#cards').val()
+            }),
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.error){
+                    $('#payment-error').fadeIn(100);
+                    $('#payment-error').text(data.error);
+                    $('#PaymentCard span').text('Finalizar pagamento');
+                } else {
+                    if(data.status == 'CONFIRMED'){
+                        $('#card-success').fadeIn(300);
+                    }
+                    $('.return-card').fadeOut(100);
+                    $('.form-card label').fadeOut(100);
+                    $('#cards').fadeOut(100);
+                    $(this).fadeOut(100);
+                }
+
+            });
     });
 
     $('#upload-photo').change(function(event){

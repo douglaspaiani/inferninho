@@ -30,6 +30,10 @@ class CreditCards extends Model
         $this->CreditCardsRepository = new CreditCardsRepository;
     }
 
+    public function getCard(int $id){
+        return $this->CreditCardsRepository->find($id);
+    }
+
     public function validAddress(){
         return $this->CreditCardsRepository->validAddress();
     }
@@ -72,5 +76,14 @@ class CreditCards extends Model
         ];
 
         return $this->CreditCardsRepository->insertCard($data);
+    }
+
+    public function ValidIntegrity(int $id_card){
+        $card = $this->CreditCardsRepository->find($id_card);
+        if($card['user'] == Auth::id()){
+            return true;
+        } else {
+            return false;
+        }
     }
 }

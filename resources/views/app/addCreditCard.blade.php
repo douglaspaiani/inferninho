@@ -3,14 +3,18 @@
 <x-navbar-component/>
 
 <div class="container page">
-<a href="{{ route('credit-cards') }}" class="Back"><i class="fa-solid fa-chevron-left"></i> Voltar</a>
+<a href="{{ url()->previous() }}" class="Back"><i class="fa-solid fa-chevron-left"></i> Voltar</a>
 
                 <h2 class="title">Cadastrar novo cartão de crédito</h2>
 
                 <x-errors-component/>
 
                 <div class="AddCard boxContent">
+                    @if(request()->has('ref'))
+                    <form class="section" method="POST" action="{{ route('add-credit-card') }}?ref={{ request()->get('ref') }}">
+                    @else
                     <form class="section" method="POST" action="{{ route('add-credit-card') }}">
+                    @endif
                         @csrf
                         <div class="input-form">
                             <label class="label" for="number">Número do cartão de crédito</label>

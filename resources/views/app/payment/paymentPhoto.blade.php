@@ -24,34 +24,9 @@
             <a href="{{ route('username', ['username'=>str_replace('@','',$user->username)]) }}"><i>{{ $user->username }}</i></a>
         </div>
     </div>
-    <div class="beneficits">
-        <p>Assine e tenha acesso exclusivo aos benefícios:</p>
-        <ul>
-            <li><i class="fa-solid fa-circle-check"></i> Acesso livre ao conteúdo</li>
-            <li><i class="fa-solid fa-circle-check"></i> Chat exclusivo com {{ $user->name }}</li>
-            <li><i class="fa-solid fa-circle-check"></i> Cancele a qualquer momento</li>
-        </ul>
-    </div>
-    <div class="cycle">
-        <h3>Selecione um pacote:</h3>
-        @if(!empty($user->price_1))
-        <div class="plan">
-            <input type="radio" name="plan" value="1" id="price_1" checked>
-            <label for="price_1"><span>1 mês por <b>R$ {{ number_format($user->price_1, 2, ',', '.') }}</b></span></label>
-        </div>
-        @endif
-        @if(!empty($user->price_3))
-        <div class="plan">
-            <input type="radio" name="plan" value="3" id="price_3">
-            <label for="price_3"><span>3 meses por <b>R$ {{ number_format($user->price_3, 2, ',', '.') }}</b> <sub>({{ $discounts['discount_3'] }}% OFF)</sub></span></label>
-        </div>
-        @endif
-        @if(!empty($user->price_6))
-        <div class="plan">
-            <input type="radio" name="plan" value="6" id="price_6">
-            <label for="price_6"><span>6 meses por <b>R$ {{ number_format($user->price_6, 2, ',', '.') }}</b> <sub>({{ $discounts['discount_6'] }}% OFF)</sub></span></label>
-        </div>
-        @endif
+    <div class="beneficits" style="text-align: center">
+        <p style="text-align: center">Pagamento de foto privada:</p>
+        <sup class="valueTotal">R$ {{ number_format($post->value, 2, ',', '.'); }}</sup>
     </div>
     <div class="subscribe">
         <h3>Selecione a forma de pagamento:</h3>
@@ -65,7 +40,7 @@
         <div id="method-pix">
             <div class="return-pix" style="text-align: center">
                 <span class="val">Valor do pagamento:</span>
-                <sup class="value"></sup>
+                <sup class="value">R$ {{ number_format($post->value, 2, ',', '.'); }}</sup>
                 <center><img class="qrcode" src="" width="200"></center>
                 <input type="text" class="codepix">
                 <button type="button"><i class="fa-regular fa-copy"></i> Copiar código Pix</button>
@@ -79,7 +54,7 @@
             @else
             <div class="return-card" style="text-align: center">
                 <span class="val">Valor do pagamento:</span>
-                <sup class="value-card"></sup>
+                <sup class="value-card">R$ {{ number_format($post->value, 2, ',', '.'); }}</sup>
             </div>
             <label for="cards">Selecione um cartão de crédito para essa compra:</label>
             <select id="cards" name="card">

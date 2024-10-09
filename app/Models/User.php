@@ -37,6 +37,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
         'password',
         'birth',
         'photo',
@@ -68,7 +69,9 @@ class User extends Authenticatable
         'city',
         'state',
         'email_verified_at',
-        'ban'
+        'ban',
+        'customer',
+        'wallet'
     ];
 
     /**
@@ -92,6 +95,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function UpdateUser(array $data){
+        return $this->UserRepository->UpdateUser($data);
     }
 
     public function getUserById(int $id){
@@ -209,6 +216,8 @@ class User extends Authenticatable
         $data = [
             'id' => Auth::id(),
             'hidden_name' => empty($user['hidden_name']) ? 0 : 1,
+            'cpf' => $user['cpf'] ?? null,
+            'phone' => $user['phone'] ?? null,
             'zipcode' => $user['zipcode'] ?? null,
             'address' => $user['address'] ?? null,
             'number' => $user['number'] ?? null,

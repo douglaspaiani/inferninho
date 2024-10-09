@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('phone')->nullable();
             $table->integer('top')->default(0);
             $table->integer('verify')->default(0);
             $table->integer('likes')->default(0);
@@ -47,6 +48,8 @@ return new class extends Migration
             $table->integer('hidden_name')->default(0);
             $table->integer('timer')->default(0);
             $table->integer('ban')->default(0);
+            $table->string('customer')->nullable();
+            $table->string('wallet')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

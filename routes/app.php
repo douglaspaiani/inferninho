@@ -54,6 +54,10 @@ Route::middleware('auth')->prefix('app')->group(function () {
     Route::get('/support/{id}', [\App\Http\Controllers\SupportController::class, 'ReadSupport'])->name('read-support');
     Route::post('/support/{id}', [\App\Http\Controllers\SupportController::class, 'AddResponseSupport'])->name('read-support');
     Route::get('/close-support/{id}', [\App\Http\Controllers\ChatController::class, 'MessagesPage'])->name('close-support');
+    // Payments
+    Route::post('/{username}/payment-subscription', [\App\Http\Controllers\PaymentController::class, 'NewPaymentSubscription'])->name('payment-subscription');
+    Route::get('/verify-payment/{type}/{id}', [\App\Http\Controllers\PaymentController::class, 'VerifyPayment'])->name('verify-payment');
+    Route::get('/payment-photo/{id}', [\App\Http\Controllers\PaymentController::class, 'PaymentPhotoPage'])->name('payment-photo');
 });
 
 // User Profile

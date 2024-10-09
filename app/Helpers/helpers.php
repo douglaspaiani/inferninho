@@ -102,4 +102,11 @@ function FormatContent($content){
 
     return $content;
 }
+function stringPhone($numero){
+    $num = str_replace('(', '', $numero);
+    $num = str_replace(')', '', $num);
+    $num = str_replace(' ', '', $num);
+    $num = str_replace('-', '', $num);
+    return $num;
 
+}

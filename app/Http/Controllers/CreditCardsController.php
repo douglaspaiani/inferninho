@@ -25,6 +25,9 @@ class CreditCardsController extends Controller
         try {
             $card = new CreditCards;
             $card->insertCard($request);
+            if ($request->has('ref')) {
+                return redirect($request->get('ref'));
+            }
             return redirect()->route('credit-cards')->with(['success' => 'Cartão de crédito adicionado com sucesso!']);
         } catch (Exception $e){
             return redirect()->route('add-credit-card')->withErrors(['error' => $e->getMessage()]);

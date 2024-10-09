@@ -5,6 +5,7 @@
 <x-navbar-nologging-component/>
 @endif
 <div class="container pageProfile">
+    <x-errors-component/>
     @if($user->ban == 1)
     <div class="banned">
         <i class="fa-solid fa-ban"></i>

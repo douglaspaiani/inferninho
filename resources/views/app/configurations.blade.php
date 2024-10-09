@@ -22,8 +22,16 @@
                     @endif
                     <div class="section">
                         <h3 class="subtitle">Dados de cobrança</h3>
-                        <p class="sub">Usado para compras nos cartões de créditos cadastrados.</p>
+                        <p class="sub">Usado para compras nos cartões de créditos cadastrados e PIX.</p>
                         <div class="AddCard" style="margin-top: 30px">
+                            <div class="input-form">
+                                <label class="label" for="phone">Celular</label>
+                                <input type="text" class="input phone" name="phone" id="phone" placeholder="(00) 00000-0000" inputmode="numeric" value="{{ $user->phone }}" required></input>
+                            </div>
+                            <div class="input-form">
+                                <label class="label" for="cpf">CPF</label>
+                                <input type="text" class="input cpf" name="cpf" id="cpf" placeholder="000.000.000-00" inputmode="numeric" value="{{ $user->cpf }}" required></input>
+                            </div>
                                 <div class="input-form">
                                     <label class="label" for="zipcode">CEP</label>
                                     <input type="text" class="input zipcode" name="zipcode" id="zipcode" placeholder="00000-000" inputmode="numeric" value="{{ $user->zipcode }}" required></input>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CreditCards;
 use App\Models\Subscriptions;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -15,7 +16,9 @@ class SubscriptionsController extends Controller
         if($subs->validSubscription($user['id']) == true){
             return redirect()->route('username', ['username' => str_replace('@', '', $user['username'])]);
         }
-        return view('app.checkout', ['user' => $user, 'discounts' => $subs->getDiscounts($user['id'])]);
+        $card = new CreditCards;
+        $cards = $card->listCards();
+        return view('app.checkout', ['user' => $user, 'discounts' => $subs->getDiscounts($user['id']), 'cards' => $cards]);
     }
 
     public function FollowingPage(){

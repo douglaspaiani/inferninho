@@ -22,6 +22,7 @@ return new class extends Migration
             $table->float('price');
             $table->string('method');
             $table->string('final_card')->nullable();
+            $table->string('pay')->nullable();
             $table->timestamps();
         });
     }

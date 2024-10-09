@@ -40,7 +40,7 @@
                 <h4>FOTO PRIVADA</h4>
                 <p>Compre essa foto por apenas</p>
                 <span>R$ {{ number_format($value, 2, ',', '.') }}</span>
-                <a href="#">Comprar agora</a>
+                <a href="{{ route('payment-photo', ['id' => $id]) }}">Comprar agora</a>
             </div>
             @if(!empty($image))
                 @foreach ($images as $photo)
