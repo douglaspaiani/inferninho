@@ -108,5 +108,11 @@ function stringPhone($numero){
     $num = str_replace(' ', '', $num);
     $num = str_replace('-', '', $num);
     return $num;
-
+}
+function ComissionAdmin($value){
+    return number_format(($value * env('PERCENT')) / 100, 2, ',', '.');
+}
+function ComissionUser($value){
+    $percent = 100 - env('PERCENT');
+    return number_format(($value * $percent) / 100, 2, ',', '.');
 }

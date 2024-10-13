@@ -30,7 +30,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Configs
         date_default_timezone_set('America/Sao_Paulo');
+
+        // Functions
+        require_once app_path('Helpers/helpers.php');
+
+        // Components
         Blade::component('post-component', PostComponent::class);
         Blade::component('navbar-component', NavBarComponent::class);
         Blade::component('navbar-nologging-component', NavBarNoLoggingComponent::class);

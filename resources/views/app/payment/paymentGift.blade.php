@@ -25,8 +25,27 @@
         </div>
     </div>
     <div class="beneficits" style="text-align: center">
-        <p style="text-align: center">Você está adquirindo<br>uma foto privada por:</p>
-        <sup class="valueTotal">R$ {{ number_format($post->value, 2, ',', '.'); }}</sup>
+        <p style="text-align: center">Qual valor você quer enviar<br>como mimo para <b>{{ $user->name }}</b>?</p>
+        <div class="gift">
+            <span>R$</span>
+            <input type="text" id="valuegift" class="money" placeholder="0,00" name="value" inputmode="numeric" required>
+            <p id="error-value">Valor mínimo de doação é de R$ 10,00!</p>
+        </div>
+        <div class="private">
+            <div class="input-form input-checkbox">
+                <label for="private" class="checkbox">
+                    <input type="checkbox" name="private" id="private" value="1" checked>
+                    <span></span>
+                </label>
+                <label class="label-checkbox" for="private">Enviar mimo anonimamente</label>
+            </div>
+        </div>
+        <div class="message">
+            <label for="message">Envie uma mensagem junto ao mimo:</label>
+            <textarea style="margin-top:10px" class="input textarea" name="message" id="message" placeholder="Escreva sua mensagem"></textarea>
+            <p id="charCount">255 caracteres restantes</p>
+        </div>
+        
     </div>
     <div class="subscribe">
         <h3>Selecione a forma de pagamento:</h3>
@@ -40,12 +59,12 @@
         <div id="method-pix">
             <div class="return-pix" style="text-align: center">
                 <span class="val">Valor do pagamento:</span>
-                <sup>R$ {{ number_format($post->value, 2, ',', '.'); }}</sup>
+                <sup></sup>
                 <center><img class="qrcode" src="" width="200"></center>
                 <input type="text" class="codepix">
                 <button type="button"><i class="fa-regular fa-copy"></i> Copiar código Pix</button>
             </div>
-            <button type="button" id="PaymentPixPhoto"><i class="fa-solid fa-qrcode"></i> <span>Gerar QR Code</span></button>
+            <button type="button" id="PaymentPixGift"><i class="fa-solid fa-qrcode"></i> <span>Gerar QR Code</span></button>
         </div>
         <div id="method-card" class="form-card">
             @if(count($cards) == 0)
@@ -54,7 +73,7 @@
             @else
             <div class="return-card" style="text-align: center">
                 <span class="val">Valor do pagamento:</span>
-                <sup>R$ {{ number_format($post->value, 2, ',', '.'); }}</sup>
+                <sup></sup>
             </div>
             <label for="cards">Selecione um cartão de crédito para essa compra:</label>
             <select id="cards" name="card">
@@ -66,9 +85,9 @@
             <div id="card-success">
                 <i class="icon fa-regular fa-circle-check"></i>
                 <h6>Pagamento aprovado!</h6>
-                <a class="btn" href="{{ route('post', ['id'=>$post->id]) }}"><i class="fa-solid fa-image"></i> Ver foto</a>
+                <a class="btn" href="{{ route('username', ['username'=>str_replace('@','',$user->username)]) }}"><i class="fa-solid fa-user"></i> Voltar ao perfil</a>
             </div>
-            <button type="button" id="PaymentCardPhoto"><i class="fa-regular fa-circle-check"></i> <span>Finalizar pagamento</span></button>
+            <button type="button" id="PaymentCardGift"><i class="fa-regular fa-circle-check"></i> <span>Finalizar pagamento</span></button>
             @endif
         </div>
     </div>

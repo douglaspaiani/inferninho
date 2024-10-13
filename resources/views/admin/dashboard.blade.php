@@ -8,7 +8,7 @@
         Dashboard
       </h1>
       <p class="fw-medium mb-0 text-muted">
-        Seja bem vindo(a) á administração do Inferninho!
+        Seja bem vindo(a) á administração do {{ env('APP_NAME') }}!
       </p>
     </div>
   </div>
@@ -21,8 +21,19 @@
           <div class="item rounded-3 bg-body mx-auto my-3">
             <i class="fa fa-video fa-lg text-primary"></i>
           </div>
-          <div class="fs-1 fw-bold">{{ number_format($creators, 0, ',', '.') }}</div>
+          <div class="fs-1 fw-bold">{{ number_format($creators['current'], 0, ',', '.') }}</div>
           <div class="text-muted mb-3">Criadores ativos</div>
+          @if($creators['evo'] >= 0)
+          <div class="d-inline-block px-3 py-1 rounded-pill fs-sm fw-semibold text-success bg-success-dark">
+            <i class="fa fa-caret-up me-1"></i>
+            {{ $creators['evo'] }} %
+          </div>
+          @else
+          <div class="d-inline-block px-3 py-1 rounded-pill fs-sm fw-semibold text-danger bg-danger-light">
+            <i class="fa fa-caret-down me-1"></i>
+            {{ $creators['evo'] }} %
+          </div>
+          @endif
         </div>
         <div class="block-content block-content-full block-content-sm bg-body-light fs-sm">
           <a class="fw-medium" href="{{ route('admin.creators') }}">
@@ -38,8 +49,19 @@
           <div class="item rounded-3 bg-body mx-auto my-3">
             <i class="fa fa-users fa-lg text-primary"></i>
           </div>
-          <div class="fs-1 fw-bold">{{ number_format($subscribers, 0, ',', '.') }}</div>
-          <div class="text-muted mb-3">Assinantes ativos</div>
+          <div class="fs-1 fw-bold">{{ number_format($subscribers['current'], 0, ',', '.') }}</div>
+          <div class="text-muted mb-3">Assinantes cadastrados</div>
+          @if($subscribers['evo'] >= 0)
+          <div class="d-inline-block px-3 py-1 rounded-pill fs-sm fw-semibold text-success bg-success-dark">
+            <i class="fa fa-caret-up me-1"></i>
+            {{ $subscribers['evo'] }} %
+          </div>
+          @else
+          <div class="d-inline-block px-3 py-1 rounded-pill fs-sm fw-semibold text-danger bg-danger-light">
+            <i class="fa fa-caret-down me-1"></i>
+            {{ $subscribers['evo'] }} %
+          </div>
+          @endif
         </div>
         <div class="block-content block-content-full block-content-sm bg-body-light fs-sm">
           <a class="fw-medium" href="{{ route('admin.subscribers') }}">
@@ -55,8 +77,19 @@
           <div class="item rounded-3 bg-body mx-auto my-3">
             <i class="fa fa-check-circle fa-lg text-primary"></i>
           </div>
-          <div class="fs-1 fw-bold">{{ number_format($subscriptions, 0, ',', '.') }}</div>
+          <div class="fs-1 fw-bold">{{ number_format($subscriptions['current'], 0, ',', '.') }}</div>
           <div class="text-muted mb-3">Assinaturas ativas</div>
+          @if($subscriptions['evo'] >= 0)
+          <div class="d-inline-block px-3 py-1 rounded-pill fs-sm fw-semibold text-success bg-success-dark">
+            <i class="fa fa-caret-up me-1"></i>
+            {{ $subscriptions['evo'] }} %
+          </div>
+          @else
+          <div class="d-inline-block px-3 py-1 rounded-pill fs-sm fw-semibold text-danger bg-danger-light">
+            <i class="fa fa-caret-down me-1"></i>
+            {{ $subscriptions['evo'] }} %
+          </div>
+          @endif
         </div>
       </div>
     </div>
@@ -66,11 +99,22 @@
           <div class="item rounded-3 bg-body mx-auto my-3">
             <i class="fa fa-heart fa-lg text-primary"></i>
           </div>
-          <div class="fs-1 fw-bold">{{ number_format($subscribers, 0, ',', '.') }}</div>
+          <div class="fs-1 fw-bold">{{ number_format($countGifts['current'], 0, ',', '.') }}</div>
           <div class="text-muted mb-3">Mimos enviados</div>
+          @if($countGifts['evo'] >= 0)
+          <div class="d-inline-block px-3 py-1 rounded-pill fs-sm fw-semibold text-success bg-success-dark">
+            <i class="fa fa-caret-up me-1"></i>
+            {{ $countGifts['evo'] }} %
+          </div>
+          @else
+          <div class="d-inline-block px-3 py-1 rounded-pill fs-sm fw-semibold text-danger bg-danger-light">
+            <i class="fa fa-caret-down me-1"></i>
+            {{ $countGifts['evo'] }} %
+          </div>
+          @endif
         </div>
         <div class="block-content block-content-full block-content-sm bg-body-light fs-sm">
-          <a class="fw-medium" href="{{ route('admin.subscribers') }}">
+          <a class="fw-medium" href="{{ route('admin.gifts') }}">
             Ver todos os mimos
             <i class="fa fa-arrow-right ms-1 opacity-25"></i>
           </a>
@@ -136,11 +180,22 @@
         <div class="block-content block-content-full d-flex justify-content-between align-items-center flex-grow-1">
           <div class="me-3">
             <p class="fs-3 fw-bold mb-0">
-              {{ number_format($views, 0, ',', '.') }}
+              {{ number_format($views['current'], 0, ',', '.') }}
             </p>
             <p class="text-muted mb-0">
               Visualizações totais
             </p>
+            @if($views['evo'] >= 0)
+          <div class="d-inline-block px-3 py-1 rounded-pill fs-sm fw-semibold text-success bg-success-dark">
+            <i class="fa fa-caret-up me-1"></i>
+            {{ $views['evo'] }} %
+          </div>
+          @else
+          <div class="d-inline-block px-3 py-1 rounded-pill fs-sm fw-semibold text-danger bg-danger-light">
+            <i class="fa fa-caret-down me-1"></i>
+            {{ $views['evo'] }} %
+          </div>
+          @endif
           </div>
           <div class="item rounded-circle bg-body">
             <i class="fa fa-eye fa-lg text-primary"></i>

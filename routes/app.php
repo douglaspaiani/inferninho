@@ -56,8 +56,11 @@ Route::middleware('auth')->prefix('app')->group(function () {
     Route::get('/close-support/{id}', [\App\Http\Controllers\ChatController::class, 'MessagesPage'])->name('close-support');
     // Payments
     Route::post('/{username}/payment-subscription', [\App\Http\Controllers\PaymentController::class, 'NewPaymentSubscription'])->name('payment-subscription');
+    Route::post('/{username}/payment-photo/{id}', [\App\Http\Controllers\PaymentController::class, 'NewPaymentPhoto'])->name('payment-photo');
+    Route::post('/{username}/payment-gift/{id}', [\App\Http\Controllers\PaymentController::class, 'NewPaymentGift'])->name('payment-gift');
     Route::get('/verify-payment/{type}/{id}', [\App\Http\Controllers\PaymentController::class, 'VerifyPayment'])->name('verify-payment');
     Route::get('/payment-photo/{id}', [\App\Http\Controllers\PaymentController::class, 'PaymentPhotoPage'])->name('payment-photo');
+    Route::get('/payment-gift/{id}', [\App\Http\Controllers\PaymentController::class, 'PaymentGiftPage'])->name('payment-gift');
 });
 
 // User Profile

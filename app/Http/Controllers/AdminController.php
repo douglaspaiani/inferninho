@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Gifts;
 use App\Models\Support;
 use App\Models\User;
 use Exception;
@@ -40,10 +41,36 @@ class AdminController extends Controller
         $support = new Support;
         $creators = $admin->CountAllCreators();
         $subscribers = $admin->CountAllSubscribers();
+        $countGifts = $admin->CountAllGifts();
         $subscriptions = $admin->CountAllSubscriptions();
         $views = $admin->CountAllViews();
         $supports = $support->ListAllSupport();
-        return view('admin.dashboard', ['subscribers' => $subscribers, 'creators' => $creators, 'subscriptions' => $subscriptions, 'views' => $views, 'supports' => $supports]);
+        return view('admin.dashboard', ['countGifts' => $countGifts, 'subscribers' => $subscribers, 'creators' => $creators, 'subscriptions' => $subscriptions, 'views' => $views, 'supports' => $supports]);
+    }
+
+    public function Invoicing(Request $request){
+        $date = null;
+        if(!empty($request->get('month'))){
+            $month = $request->get('month');
+            $year = $request->get('year');
+            $date = $month."-".$year;
+        } else {
+            $month = date('m');
+            $year = date('Y');
+            $date = $month."-".$year;
+        }
+        $admin = new Admin;
+        $support = new Support;
+        $creators = $admin->CountAllCreators($date);
+        $subscribers = $admin->CountAllSubscribers($date);
+        $countGifts = $admin->CountAllGifts($date);
+        $subscriptions = $admin->CountAllSubscriptions($date);
+        $views = $admin->CountAllViews($date);
+        $supports = $support->ListAllSupport();
+        $invoiceSubs = $admin->GetInvoicingSubscriptions($date);
+        $photos = $admin->GetInvoicingPhotos($date);
+        $gifts = $admin->GetInvoicingGifts($date);
+        return view('admin.invoice.invoicing', ['countGifts' => $countGifts, 'photos' => $photos, 'gifts' => $gifts, 'year' => $year ?? null, 'month' => $month ?? null, 'invoiceSubs' => $invoiceSubs, 'subscribers' => $subscribers, 'creators' => $creators, 'subscriptions' => $subscriptions, 'views' => $views, 'supports' => $supports]);
     }
 
     public function Creators(){
@@ -148,5 +175,11 @@ class AdminController extends Controller
         $support = new Support;
         $support->CloseSupport($id);
         return redirect()->route('admin.support')->with(['success' => 'Chamado fechado com sucesso!']);
+    }
+
+    public function Gifts(){
+        $gift = new Gifts;
+        $gifts = $gift->getAll();
+        return view('admin.gifts.gifts', ['gifts' => $gifts]);
     }
 }

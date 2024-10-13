@@ -157,4 +157,8 @@ class Posts extends Model
     public function getPostsPurchased(){
         return $this->PostRepository->getPostsPurchased();
     }
+
+    public function getValue(int $id){
+        return $this->PostRepository->getValue($id);
+    }
 }

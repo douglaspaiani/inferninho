@@ -11,14 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('photos_solds', function (Blueprint $table) {
+        Schema::create('gifts', function (Blueprint $table) {
             $table->id();
             $table->integer('user');
             $table->integer('subscriber');
             $table->integer('post');
-            $table->string('pay')->nullable();
             $table->integer('status')->default(0);
-            $table->float('value')->default(0);
+            $table->float('value');
+            $table->string('pay')->nullable();
+            $table->integer('private')->default(1);
+            $table->integer('view')->default(0);
+            $table->text('message')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('photos_solds');
+        Schema::dropIfExists('gifts');
     }
 };

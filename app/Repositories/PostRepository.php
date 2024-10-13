@@ -105,4 +105,9 @@ class PostRepository {
         $posts = PhotosSold::where('subscriber', Auth::id())->pluck('post');
         return Posts::whereIn('id', $posts)->get(['photos', 'id']);
     }
+
+    public function getValue(int $id){
+        $post = Posts::where('id', $id)->get(['value'])->first();
+        return $post->value;
+    }
 }

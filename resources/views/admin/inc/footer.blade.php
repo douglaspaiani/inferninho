@@ -5,7 +5,7 @@
           Powered by <a class="fw-semibold" href="https://douglaspaiani.com.br" target="_blank">Douglas Paiani</a>
         </div>
         <div class="col-sm-6 order-sm-1 text-center text-sm-start">
-            <span data-toggle="year-copy"></span> &copy; <b>Inferninho</b> | Todos os direitos reservados.
+            <span data-toggle="year-copy"></span> &copy; <b>{{ env('APP_NAME') }}</b> | Todos os direitos reservados.
         </div>
       </div>
     </div>

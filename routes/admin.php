@@ -7,6 +7,8 @@ Route::get('/auth', [\App\Http\Controllers\AdminController::class, 'Login'])->na
 Route::post('/auth', [\App\Http\Controllers\AdminController::class, 'LoginPost'])->name('admin.login');
 Route::middleware('auth:admin')->prefix('admin')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\AdminController::class, 'Dashboard'])->name('admin.dashboard');
+    // Invoicing
+    Route::get('/invoicing', [\App\Http\Controllers\AdminController::class, 'Invoicing'])->name('admin.invoicing');
     // Creators
     Route::get('/creators', [\App\Http\Controllers\AdminController::class, 'Creators'])->name('admin.creators');
     Route::get('/edit-creator/{id}', [\App\Http\Controllers\AdminController::class, 'EditCreator'])->name('admin.edit-creator');
@@ -21,6 +23,8 @@ Route::middleware('auth:admin')->prefix('admin')->group(function () {
     Route::get('/subscribers', [\App\Http\Controllers\AdminController::class, 'Subscribers'])->name('admin.subscribers');
     Route::get('/edit-subscriber/{id}', [\App\Http\Controllers\AdminController::class, 'EditSubscriber'])->name('admin.edit-subscriber');
     Route::post('/edit-subscriber/{id}', [\App\Http\Controllers\AdminController::class, 'EditSubscriberPost'])->name('admin.edit-subscriber');
+    // Gifts
+    Route::get('/gifts', [\App\Http\Controllers\AdminController::class, 'Gifts'])->name('admin.gifts');
     // Support
     Route::get('/support', [\App\Http\Controllers\AdminController::class, 'SupportPage'])->name('admin.support');
     Route::get('/support-closed', [\App\Http\Controllers\AdminController::class, 'SupportClosedPage'])->name('admin.support-closed');

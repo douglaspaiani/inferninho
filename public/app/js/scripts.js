@@ -151,6 +151,16 @@ $(document).ready(function(){
         $('#EditComment textarea').val(comment);
         $('#EditComment textarea').select();
     });
+    $('#message').on('input', function() {
+        let maxChars = 255;
+        let currentLength = $(this).val().length;
+        let remaining = maxChars - currentLength;
+        $('#charCount').text(remaining + ' caracteres restantes');
+        if (currentLength >= maxChars) {
+            $(this).val($(this).val().substr(0, maxChars));
+            $('#charCount').text('0 caracteres restantes');
+        }
+    });
     $('#SearchBar input').on('keyup', function() {
         let search = $(this).val();
         if (search !== '') {
@@ -316,8 +326,8 @@ $(document).ready(function(){
     $('#btn-pix').click(function(){
         $('.subscribe .payment button').css('background-color', '#4b4b4b');
         $(this).css('background-color', '#CE5656');
-        $('#method-pix').fadeIn(200);
-        $('#method-card').fadeOut(200);
+        $('#method-pix').show();
+        $('#method-card').hide();
     });
     $('input[name="plan"]').click(function(){
         $('.value-card').text($('label[for='+$('input[name="plan"]:checked').attr('id')+'] b').text());
@@ -326,15 +336,30 @@ $(document).ready(function(){
         $('.subscribe .payment button').css('background-color', '#4b4b4b');
         $('.value-card').text($('label[for='+$('input[name="plan"]:checked').attr('id')+'] b').text());
         $(this).css('background-color', '#CE5656');
-        $('#method-pix').fadeOut(200);
-        $('#method-card').fadeIn(200);
+        $('#method-pix').hide();
+        $('#method-card').show();
     });
+
+    $('#valuegift').on('input', function() {
+        let inputValue = $(this).val(); // Get the value of the input
+        $('sup').text('R$ '+inputValue);
+    });
+
+    $('.payment .btn').click(function(){
+        let valueVerify = parseFloat($('input[name="value"]').val().replace(/[^\d,.-]/g, '').replace(',', '.'));
+        if(valueVerify < 10 || isNaN(valueVerify)){
+            $('#error-value').fadeIn(100);
+            $('input[name="value"]').val('10,00');
+            $('sup').text('R$ 10,00');
+        }
+    });
+
     $('#PaymentPix').click(function(){
-        $('.error').fadeOut(100);
+        $('.error').fadeOut();
         $('input[name="plan"]').attr('disabled', true);
         $('#PaymentPix span').text('Gerando PIX de pagamento...');
         let username = $('input[name="username"]').val();
-        fetch(BASE_URL+`${username}/payment-subscription`, {
+        fetch(APP_URL+`/${username}/payment-subscription`, {
             method: 'POST',
             body: JSON.stringify({
                 'method': 'PIX',
@@ -360,12 +385,83 @@ $(document).ready(function(){
 
             });
     });
+    $('#PaymentPixPhoto').click(function(){
+        $('.error').fadeOut();
+        $('#PaymentPixPhoto span').text('Gerando PIX de pagamento...');
+        let username = $('input[name="username"]').val();
+        let photo = $('input[name="photo"]').val();
+        fetch(APP_URL+`/${username}/payment-photo/${photo}`, {
+            method: 'POST',
+            body: JSON.stringify({
+                'method': 'PIX',
+                'photo': photo
+            }),
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.error){
+                    $('#payment-error').fadeIn(100);
+                    $('#payment-error').text(data.error);
+                } else {
+                    $('.qrcode').attr('src', 'data:image/png;base64,'+data.qrcode);
+                    $('.codepix').val(data.payload);
+                    $(this).fadeOut(100);
+                    $('.return-pix').fadeIn(200);
+                }
+
+            });
+    });
+    $('#PaymentPixGift').click(function(){
+        $('.error').fadeOut();
+        $('#PaymentPixGift span').text('Gerando PIX de pagamento...');
+        let username = $('input[name="username"]').val();
+        let photo = $('input[name="photo"]').val();
+        let value = $('input[name="value"]').val();
+        let message = $('#message').val();
+        let private = 0;
+        if($('#private').is(':checked')){
+            private = 1;
+        }
+        fetch(APP_URL+`/${username}/payment-gift/${photo}`, {
+            method: 'POST',
+            body: JSON.stringify({
+                'method': 'PIX',
+                'photo': photo,
+                'value': value,
+                'private': private,
+                'message': message
+            }),
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.error){
+                    $('#payment-error').fadeIn(100);
+                    $('#payment-error').text(data.error);
+                } else {
+                    $('input[name="value"]').attr('disabled', true);
+                    $('#message').attr('disabled', true);
+                    $('.qrcode').attr('src', 'data:image/png;base64,'+data.qrcode);
+                    $('.codepix').val(data.payload);
+                    $(this).fadeOut(100);
+                    $('.return-pix').fadeIn(200);
+                }
+
+            });
+    });
     $('#PaymentCard').click(function(){
-        $('.error').fadeOut(100);
+        $('.error').fadeOut();
         $('input[name="plan"]').attr('disabled', true);
         $('#PaymentCard span').text('Finalizando pagamento...');
         let username = $('input[name="username"]').val();
-        fetch(BASE_URL+`${username}/payment-subscription`, {
+        fetch(APP_URL+`/${username}/payment-subscription`, {
             method: 'POST',
             body: JSON.stringify({
                 'method': 'CREDIT_CARD',
@@ -386,7 +482,93 @@ $(document).ready(function(){
                 } else {
                     if(data.status == 'CONFIRMED'){
                         $('#card-success').fadeIn(300);
+                        $('.payment .btn').fadeOut(300);
                     }
+                    $('.return-card').fadeOut(100);
+                    $('.form-card label').fadeOut(100);
+                    $('#cards').fadeOut(100);
+                    $(this).fadeOut(100);
+                }
+
+            });
+    });
+
+    $('#PaymentCardPhoto').click(function(){
+        $('.error').fadeOut();
+        $('#PaymentCardPhoto span').text('Finalizando pagamento...');
+        let username = $('input[name="username"]').val();
+        let photo = $('input[name="photo"]').val();
+        fetch(APP_URL+`/${username}/payment-photo/${photo}`, {
+            method: 'POST',
+            body: JSON.stringify({
+                'method': 'CREDIT_CARD',
+                'card': $('#cards').val(),
+                'photo': photo
+            }),
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.error){
+                    $('#payment-error').fadeIn(100);
+                    $('#payment-error').text(data.error);
+                    $('#PaymentCardPhoto span').text('Finalizar pagamento');
+                } else {
+                    if(data.status == 'CONFIRMED'){
+                        $('#card-success').fadeIn(300);
+                        $('.payment .btn').fadeOut(300);
+                    }
+                    $('.return-card').fadeOut(100);
+                    $('.form-card label').fadeOut(100);
+                    $('#cards').fadeOut(100);
+                    $(this).fadeOut(100);
+                }
+
+            });
+    });
+
+    $('#PaymentCardGift').click(function(){
+        $('.error').fadeOut();
+        $('#PaymentCardGift span').text('Finalizando pagamento...');
+        let username = $('input[name="username"]').val();
+        let photo = $('input[name="photo"]').val();
+        let value = $('input[name="value"]').val();
+        let message = $('#message').val();
+        let private = 0;
+        if($('#private').is(':checked')){
+            private = 1;
+        }
+        fetch(APP_URL+`/${username}/payment-gift/${photo}`, {
+            method: 'POST',
+            body: JSON.stringify({
+                'method': 'CREDIT_CARD',
+                'card': $('#cards').val(),
+                'photo': photo,
+                'value': value,
+                'private': private,
+                'message': message
+            }),
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.error){
+                    $('#payment-error').fadeIn(100);
+                    $('#payment-error').text(data.error);
+                    $('#PaymentCardGift span').text('Finalizar pagamento');
+                } else {
+                    if(data.status == 'CONFIRMED'){
+                        $('#card-success').fadeIn(300);
+                        $('.payment .btn').fadeOut(300);
+                    }
+                    $('input[name="value"]').attr('disabled', true);
+                    $('#message').attr('disabled', true);
                     $('.return-card').fadeOut(100);
                     $('.form-card label').fadeOut(100);
                     $('#cards').fadeOut(100);

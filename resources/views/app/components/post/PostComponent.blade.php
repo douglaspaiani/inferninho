@@ -78,7 +78,7 @@
                 <i class="fa-regular fa-comment"></i> <span>{{ $countComments }}</span>
             </a>
             @endif
-            <a href="#" class="button-like"><i class="fa-solid fa-dollar-sign"></i> <span>Enviar um mimo</span></a>
+            <a href="{{ route('payment-gift', ['id' => $id]) }}" class="button-like"><i class="fa-solid fa-dollar-sign"></i> <span>Enviar um mimo</span></a>
         </div>
         @endif
     </div>

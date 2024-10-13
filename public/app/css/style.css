@@ -2044,3 +2044,37 @@ box-shadow: 0px 3px 38px 8px rgba(0,0,0,0.75);
   color: #fff;
   font-weight: bold;
 }
+.gift {
+  display: block;
+  position: relative;
+}
+.gift span {
+  color: #fff;
+  position: absolute;
+  left: 20px;
+  top: 35px;
+  font-weight: bold;
+  font-size: 25px;
+}
+.gift input {
+  background-color: transparent;
+  width: 100%;
+  border: 0;
+  outline: none;
+  height: 100px;
+  color: #fff;
+  font-size: 50px;
+  text-align: center;
+  font-weight: bold;
+}
+#error-value {
+  font-size: 12px;
+  text-align: center;
+  color: var(--color-primary);
+  font-weight: bold;
+  display: none;
+}
+#charCount {
+  font-size: 12px;
+  text-align: center;
+}
